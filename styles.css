@@ -1,0 +1,29 @@
+header {
+  background: green;
+  padding: 1rem;
+}
+
+main {
+  background: gray;
+  padding: 5rem;
+}
+
+footer {
+  background: lightgrey;
+  padding: 3rem;
+}
+
+li {
+  background: orange;
+  width: 200px;
+  padding: 2rem;
+  list-style-type: none;
+}
+
+#pizza {
+  width: 500px;
+}
+
+.ingredients {
+  width: 100px;
+}
