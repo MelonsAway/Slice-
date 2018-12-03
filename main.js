@@ -1,3 +1,4 @@
+//pepperoni functions
 let pepperoni = document.getElementById('pepperoni');
 let pizzaBox = document.getElementById('pizzaBox');
 let ingredientLocation = [];
@@ -15,4 +16,10 @@ pepperoni.addEventListener('click', () => {
   pepperoniIngr.style.top = `${ingredientLocation[Math.floor(Math.random()*ingredientLocation.length)]}px`;
   pepperoniIngr.style.left = `${ingredientLocation[Math.floor(Math.random()*ingredientLocation.length)]}px`;
   pizzaBox.appendChild(pepperoniIngr);
+
+  //button function
+let completeButton = document.getElementById('complete');
+
+completeButton.addEventListener('click', function(event) {
+  alert('Test');
 });

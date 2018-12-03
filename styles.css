@@ -12,7 +12,7 @@ footer {
   background: lightgrey;
   padding: 3rem;
 }
-
+/*
 li {
   background: orange;
   width: 200px;
@@ -26,8 +26,17 @@ li {
   background-image: url('images/pizza.png');
   background-size: contain;
   position: relative;
-}
 
 .ingredients {
   width: 100px;
+}
+
+.order {
+  background-color: orange;
+  width: 15em;
+  height: auto;
+}
+
+#Order {
+  text-align: center;
 }
