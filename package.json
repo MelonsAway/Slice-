@@ -1,0 +1,22 @@
+{
+  "name": "slice-",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MelonsAway/Slice-.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MelonsAway/Slice-/issues"
+  },
+  "homepage": "https://github.com/MelonsAway/Slice-#readme",
+  "devDependencies": {
+    "jest": "^23.6.0"
+  }
+}
