@@ -12,18 +12,28 @@ footer {
   background: lightgrey;
   padding: 3rem;
 }
-
+/*
 li {
   background: orange;
   width: 200px;
   padding: 2rem;
   list-style-type: none;
 }
-
+*/
 #pizza {
   width: 500px;
 }
 
 .ingredients {
   width: 100px;
+}
+
+.order {
+  background-color: orange;
+  width: 15em;
+  height: auto;
+}
+
+#Order {
+  text-align: center;
 }
