@@ -19,6 +19,7 @@ footer {
   background-image: url('images/pizza.png');
   background-size: contain;
   position: relative;
+}
 
 .ingredients {
   width: 100px;

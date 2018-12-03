@@ -16,6 +16,7 @@ pepperoni.addEventListener('click', () => {
   pepperoniIngr.style.top = `${ingredientLocation[Math.floor(Math.random()*ingredientLocation.length)]}px`;
   pepperoniIngr.style.left = `${ingredientLocation[Math.floor(Math.random()*ingredientLocation.length)]}px`;
   pizzaBox.appendChild(pepperoniIngr);
+});
 
   //button function
 let completeButton = document.getElementById('complete');
