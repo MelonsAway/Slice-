@@ -1,15 +1,17 @@
 header {
-  background: green;
+  background: #B5B3AA;
   padding: 1rem;
 }
 
 main {
-  background: gray;
+  background: #4A4947;
   padding: 5rem;
+  display: flex;
+  justify-content: space-around;
 }
 
 footer {
-  background: lightgrey;
+  background: #B5B3AA;
   padding: 3rem;
 }
 
@@ -17,8 +19,25 @@ footer {
   width: 400px;
   height: 400px;
   background-image: url('images/pizza.png');
+  background-repeat: no-repeat;
   background-size: contain;
   position: relative;
+}
+
+#ovenBox {
+  width: 400px;
+  height: 400px;
+  background-image: url('images/stovetop.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: relative;
+}
+
+#cookButton {
+  position: absolute;
+  left: 35%;
+  bottom: -3.5rem;
+  font-size: 1.5rem;
 }
 
 .ingredients {
