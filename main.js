@@ -19,7 +19,13 @@
   }
 
   //complete button function
-const completeOrder 
+  const completeOrder = () => {
+    let variable = document.getElementById('complete');
+    variable.parentNode.removeChild(variable);
+  };
+
+  completeButton.addEventListener('click', completeOrder);
+
 
 //cook button function
   cookButton.addEventListener('click', () => {
