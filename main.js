@@ -27,7 +27,6 @@
   cookButton.addEventListener('click', () => {
     let img = document.querySelectorAll('img');
     if(!peppCount.length == 0) {
-      console.log('yes');
       let burner = document.createElement('div');
       burner.setAttribute('style', "background-image: url('images/pizza.png'); background-size: contain; background-repeat: no-repeat; position: absolute; top: 27px; left: 18px; width: 40%; height: 40%;");
       ovenBox.appendChild(burner);
@@ -42,6 +41,8 @@
         peppIngr.style.top = `${parseInt(x)/2.5}` + 'px';
         peppIngr.style.left = `${parseInt(y)/2.5}` + 'px';
         burner.appendChild(peppIngr);
+        let bigPeppIngr = document.querySelectorAll('.peppIngr')
+        pizzaBox.removeChild(bigPeppIngr[0]);
         //START COOKING FUNCTION
       }
     }
@@ -58,6 +59,7 @@ const randomPepperoni = () => {
   let peppIngr = document.createElement('img');
   peppIngr.setAttribute('src', 'images/pepperoni.svg');
   peppIngr.setAttribute('alt', 'Pepperoni');
+  peppIngr.setAttribute('class', 'peppIngr');
   peppIngr.style.width = '50px';
   peppIngr.style.position = 'absolute';
   peppIngr.style.top = `${ingredientLocation[Math.floor(Math.random()*ingredientLocation.length)]}px`;
