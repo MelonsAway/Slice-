@@ -20,8 +20,9 @@
 
   //complete button function
   const completeOrder = () => {
-    let variable = document.getElementById('complete');
-    variable.parentNode.removeChild(variable);
+    let orderList = document.getElementById('orderList');
+    console.log(typeof(orderList));
+    orderList.removeChild(orderList.firstChild);
   };
 
   completeButton.addEventListener('click', completeOrder);

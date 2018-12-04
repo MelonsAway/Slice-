@@ -7,19 +7,29 @@
   </head>
   <body>
     <header>
-      <div class="order">
-        <p id="Order">Order: </p>
-        <ul>
-          <li>3 Pepperonies</li>
+      <ul id='orderList'>
+        <li class="orders">
+          Order:
+          <ul class='ingredientList'>
+            <li class="orderIngredient">test</li>
+            <li class="orderIngredient">test2</li>
+          </ul>
+        </li>
+        <li>
+          <ul>
+            Order:
+            <li class="orderIngredient">test3</li>
+            <li class="orderIngredient">test4</li>
+          </ul>
+        </li>
         </ul>
-        <button id="complete" type="button" name="button">Complete</button>
-      </div>
+      </ul>
     </header>
     <main>
       <div id='pizzaBox'>
         <button id='cookButton' type="button" name="button">Cook Pizza</button>
       </div>
-      <div id='ovenBox'><button type="button" name="complete">test</button></div>
+      <div id='ovenBox'><button id="complete" type="button" name="complete">test</button></div>
     </main>
     <footer>
       <img src="images/pepperoni.png" alt="Pepperoni Ingredient" class='ingredients' id='pepperoni'>
