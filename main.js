@@ -19,9 +19,7 @@
   }
 
   //complete button function
-  completeButton.addEventListener('click', function(event) {
-    alert('Test');
-  });
+const completeOrder 
 
 //cook button function
   cookButton.addEventListener('click', () => {
