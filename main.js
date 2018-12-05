@@ -1,100 +1,22 @@
-  //initializing variables
-  let pepperoni = document.getElementById('pepperoni');
-  let peppCount = [];
-  let pizzaBox = document.getElementById('pizzaBox');
-  let ovenBox = document.getElementById('ovenBox')
-  let completeButton = document.getElementById('complete');
+//initializing function to run on load
+const init = () => {
+  let pepperoniIcon = document.getElementById('pepperoni');
+  pepperoniIcon.addEventListener('click', randomPepperoni);
   let cookButton = document.getElementById('cookButton');
-  let burner1;
-  let burner2;
-  let burner3;
-  let burner4;
-  let ingredientLocation = [];
+  cookButton.addEventListener('click', cookPizza);
+  let completeButton = document.getElementById('complete');
+  completeButton.addEventListener('click', completeOrder);
   let positioningUnit = 80;
-  let ingredients = ['pepperoni'];
-  let numIngredients = [5, 6, 7, 8, 9, 10];
-  let orderInterval = 10;
-  let ordersArr;
-  let orderIngredientArr;
-  let numOrders = 0;
-
-
-  //adds locations 80-270 to ingredientLocation array
   for(let i = 0; i <= 19; i++) {
     ingredientLocation[i] = positioningUnit;
     positioningUnit +=10;
-  }
-
-  //complete button function
-  const completeOrder = () => {
-    let burnerPizza = document.getElementById('burnerPizza');
-    if (burnerPizza) {
-      let orderList = document.getElementById('orderList');
-      orderList.removeChild(orderList.firstElementChild);
-      numOrders--;
-      ovenBox.removeChild(ovenBox.firstElementChild);
-      for(let i = peppCount.length; i > 0; i--) {
-        let smallPeppIngr = document.querySelectorAll('.smallPeppIngr');
-        burnerPizza.removeChild(smallPeppIngr[0]);
-      }
-    }
   };
-
-  completeButton.addEventListener('click', completeOrder);
-
-
-//cook button function
-  cookButton.addEventListener('click', () => {
-    let img = document.querySelectorAll('img');
-    if(!peppCount.length == 0) {
-      let burner = document.createElement('div');
-      burner.setAttribute('style', "background-image: url('images/pizza.png'); background-size: contain; background-repeat: no-repeat; position: absolute; top: 27px; left: 18px; width: 40%; height: 40%;");
-      burner.setAttribute('id', 'burnerPizza');
-      ovenBox.appendChild(burner);
-      for (let i = 0; i <= peppCount.length-1; i++) {
-        let peppIngr = document.createElement('img');
-        peppIngr.setAttribute('src', 'images/pepperoni.svg');
-        peppIngr.setAttribute('alt', 'Pepperoni');
-        peppIngr.setAttribute('class', 'smallPeppIngr');
-        peppIngr.style.width = '20px';
-        peppIngr.style.position = 'absolute';
-        let x = peppCount[i][0];
-        let y = peppCount[i][1];
-        peppIngr.style.top = `${parseInt(x)/2.5}` + 'px';
-        peppIngr.style.left = `${parseInt(y)/2.5}` + 'px';
-        burner.appendChild(peppIngr);
-        let bigPeppIngr = document.querySelectorAll('.peppIngr')
-        pizzaBox.removeChild(bigPeppIngr[0]);
-        //START COOKING FUNCTION
-      }
-    }
-  });
-
-//}
-
-/*window.onLoad = () => {
-  init()
-};*/
-
-//place random pepperoni function
-const randomPepperoni = () => {
-  let peppIngr = document.createElement('img');
-  peppIngr.setAttribute('src', 'images/pepperoni.svg');
-  peppIngr.setAttribute('alt', 'Pepperoni');
-  peppIngr.setAttribute('class', 'peppIngr');
-  peppIngr.style.width = '50px';
-  peppIngr.style.position = 'absolute';
-  peppIngr.style.top = `${ingredientLocation[Math.floor(Math.random()*ingredientLocation.length)]}px`;
-  peppIngr.style.left = `${ingredientLocation[Math.floor(Math.random()*ingredientLocation.length)]}px`;
-  peppCount.push([peppIngr.style.top, peppIngr.style.left]);
-  pizzaBox.appendChild(peppIngr);
+  let ordersArr;
+  let orderIngredientArr;
+  //cook button function
 }
 
-const orderCycle = () => {
-  createOrder();
-  let orderCountdown = setInterval(createOrder, 10 * 1000);
-}
-
+//function to create randomized order
 const createOrder = () => {
   ordersArr = document.getElementsByClassName('orders');
   if (ordersArr.length <= 5) {
@@ -115,13 +37,88 @@ const createOrder = () => {
   }
 }
 
-orderCycle();
+//timer function to run createOrder function every 10 secs
+const orderCycle = () => {
+  createOrder();
+  let orderCountdown = setInterval(createOrder, 10 * 1000);
+}
 
-//pepperoni eventListener
-pepperoni.addEventListener('click', randomPepperoni);
+//place random pepperoni function
+const randomPepperoni = () => {
+  let peppIngr = document.createElement('img');
+  let pizzaBox = document.getElementById('pizzaBox');
+  peppIngr.setAttribute('src', 'images/pepperoni.svg');
+  peppIngr.setAttribute('alt', 'Pepperoni');
+  peppIngr.setAttribute('class', 'peppIngr');
+  peppIngr.style.width = '50px';
+  peppIngr.style.position = 'absolute';
+  peppIngr.style.top = `${ingredientLocation[Math.floor(Math.random()*ingredientLocation.length)]}px`;
+  peppIngr.style.left = `${ingredientLocation[Math.floor(Math.random()*ingredientLocation.length)]}px`;
+  peppCount.push([peppIngr.style.top, peppIngr.style.left]);
+  pizzaBox.appendChild(peppIngr);
+}
 
+//function to move pizza to burner
+const cookPizza = () => {
+  let img = document.querySelectorAll('img');
+  let ovenBox = document.getElementById('ovenBox')
+  if(!peppCount.length == 0) {
+    let burner = document.createElement('div');
+    burner.setAttribute('style', "background-image: url('images/pizza.png'); background-size: contain; background-repeat: no-repeat; position: absolute; top: 27px; left: 18px; width: 40%; height: 40%;");
+    burner.setAttribute('id', 'burnerPizza');
+    ovenBox.appendChild(burner);
+    for (let i = 0; i <= peppCount.length-1; i++) {
+      let peppIngr = document.createElement('img');
+      peppIngr.setAttribute('src', 'images/pepperoni.svg');
+      peppIngr.setAttribute('alt', 'Pepperoni');
+      peppIngr.setAttribute('class', 'smallPeppIngr');
+      peppIngr.style.width = '20px';
+      peppIngr.style.position = 'absolute';
+      let x = peppCount[i][0];
+      let y = peppCount[i][1];
+      peppIngr.style.top = `${parseInt(x)/2.5}` + 'px';
+      peppIngr.style.left = `${parseInt(y)/2.5}` + 'px';
+      burner.appendChild(peppIngr);
+      let bigPeppIngr = document.querySelectorAll('.peppIngr')
+      pizzaBox.removeChild(bigPeppIngr[0]);
+      //START COOKING FUNCTION
+    }
+  }
+}
 
+//complete button function
+const completeOrder = () => {
+  let burnerPizza = document.getElementById('burnerPizza');
+  if (burnerPizza) {
+    let orderList = document.getElementById('orderList');
+    orderList.removeChild(orderList.firstElementChild);
+    numOrders--;
+    ovenBox.removeChild(ovenBox.firstElementChild);
+    for(let i = peppCount.length; i > 0; i--) {
+      let smallPeppIngr = document.querySelectorAll('.smallPeppIngr');
+      burnerPizza.removeChild(smallPeppIngr[0]);
+    }
+  }
+};
 
+//function to run when window loads
+window.onLoad = () => {
+  init();
+  orderCycle();
+};
+
+//initializing variables
+let numOrders = 0;
+let numIngredients = [5, 6, 7, 8, 9, 10];
+let orderInterval = 10;
+let ingredients = ['pepperoni'];
+let peppCount = [];
+let ingredientLocation = [];
+
+//runs when window loads
+window.onLoad();
+
+//exporting to test file
 if (module) {
   module.exports = {
     randomPepperoni
