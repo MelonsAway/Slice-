@@ -25,17 +25,37 @@
     positioningUnit +=10;
   }
 
+  //complete button function
+  const completeOrder = () => {
+    let burnerPizza = document.getElementById('burnerPizza');
+    if (burnerPizza) {
+      let orderList = document.getElementById('orderList');
+      orderList.removeChild(orderList.firstElementChild);
+      numOrders--;
+      ovenBox.removeChild(ovenBox.firstElementChild);
+      for(let i = peppCount.length; i > 0; i--) {
+        let smallPeppIngr = document.querySelectorAll('.smallPeppIngr');
+        burnerPizza.removeChild(smallPeppIngr[0]);
+      }
+    }
+  };
+
+  completeButton.addEventListener('click', completeOrder);
+
+
 //cook button function
   cookButton.addEventListener('click', () => {
     let img = document.querySelectorAll('img');
     if(!peppCount.length == 0) {
       let burner = document.createElement('div');
       burner.setAttribute('style', "background-image: url('images/pizza.png'); background-size: contain; background-repeat: no-repeat; position: absolute; top: 27px; left: 18px; width: 40%; height: 40%;");
+      burner.setAttribute('id', 'burnerPizza');
       ovenBox.appendChild(burner);
       for (let i = 0; i <= peppCount.length-1; i++) {
         let peppIngr = document.createElement('img');
         peppIngr.setAttribute('src', 'images/pepperoni.svg');
         peppIngr.setAttribute('alt', 'Pepperoni');
+        peppIngr.setAttribute('class', 'smallPeppIngr');
         peppIngr.style.width = '20px';
         peppIngr.style.position = 'absolute';
         let x = peppCount[i][0];
@@ -68,7 +88,6 @@ const randomPepperoni = () => {
   peppIngr.style.left = `${ingredientLocation[Math.floor(Math.random()*ingredientLocation.length)]}px`;
   peppCount.push([peppIngr.style.top, peppIngr.style.left]);
   pizzaBox.appendChild(peppIngr);
-  console.log(peppCount);
 }
 
 const orderCycle = () => {
