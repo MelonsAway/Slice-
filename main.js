@@ -1,4 +1,4 @@
-  //initializing ingredient variables
+  //initializing variables
   let pepperoni = document.getElementById('pepperoni');
   let peppCount = [];
   let pizzaBox = document.getElementById('pizzaBox');
@@ -11,17 +11,19 @@
   let burner4;
   let ingredientLocation = [];
   let positioningUnit = 80;
+  let ingredients = ['pepperoni'];
+  let numIngredients = [5, 6, 7, 8, 9, 10];
+  let orderInterval = 10;
+  let ordersArr;
+  let orderIngredientArr;
+  let numOrders = 0;
+
 
   //adds locations 80-270 to ingredientLocation array
   for(let i = 0; i <= 19; i++) {
     ingredientLocation[i] = positioningUnit;
     positioningUnit +=10;
   }
-
-  //complete button function
-  completeButton.addEventListener('click', function(event) {
-    alert('Test');
-  });
 
 //cook button function
   cookButton.addEventListener('click', () => {
@@ -69,8 +71,37 @@ const randomPepperoni = () => {
   console.log(peppCount);
 }
 
+const orderCycle = () => {
+  createOrder();
+  let orderCountdown = setInterval(createOrder, 10 * 1000);
+}
+
+const createOrder = () => {
+  ordersArr = document.getElementsByClassName('orders');
+  if (ordersArr.length <= 5) {
+    let orderList = document.getElementById('orderList');
+    let newOrder = document.createElement('li');
+    let ingredientList = document.createElement('ul');
+    let orderIngredient = document.createElement('li');
+    newOrder.setAttribute('class', 'orders');
+    newOrder.innerHTML = 'Order: ';
+    ingredientList.setAttribute('class', 'ingredientList');
+    orderIngredient.setAttribute('class', 'orderIngredient');
+    orderList.appendChild(newOrder);
+    newOrder.appendChild(ingredientList);
+    ingredientList.appendChild(orderIngredient);
+    numOrders++;
+    orderIngredientArr = document.getElementsByClassName('orderIngredient');
+    orderIngredientArr[numOrders-1].innerHTML = `${(numIngredients[Math.floor(Math.random()*numIngredients.length)]) + ' ' + (ingredients[Math.floor(Math.random()*ingredients.length)])}`;
+  }
+}
+
+orderCycle();
+
 //pepperoni eventListener
 pepperoni.addEventListener('click', randomPepperoni);
+
+
 
 if (module) {
   module.exports = {
