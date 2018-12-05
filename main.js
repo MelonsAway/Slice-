@@ -21,8 +21,9 @@
   //complete button function
   const completeOrder = () => {
     let orderList = document.getElementById('orderList');
-    console.log(typeof(orderList));
-    orderList.removeChild(orderList.firstChild);
+    console.log(orderList);
+    orderList.removeChild(orderList.firstElementChild);
+    console.log('thing');
   };
 
   completeButton.addEventListener('click', completeOrder);
