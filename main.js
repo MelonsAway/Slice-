@@ -17,8 +17,11 @@
   let ordersArr;
   let orderIngredientArr;
   let numOrders = 0;
+  let ingrNum;
+  let ingr;
 
-
+  ingr = ingredients[Math.floor(Math.random()*ingredients.length)];
+  console.log(ingr);
   //adds locations 80-270 to ingredientLocation array
   for(let i = 0; i <= 19; i++) {
     ingredientLocation[i] = positioningUnit;
@@ -111,7 +114,12 @@ const createOrder = () => {
     ingredientList.appendChild(orderIngredient);
     numOrders++;
     orderIngredientArr = document.getElementsByClassName('orderIngredient');
-    orderIngredientArr[numOrders-1].innerHTML = `${(numIngredients[Math.floor(Math.random()*numIngredients.length)]) + ' ' + (ingredients[Math.floor(Math.random()*ingredients.length)])}`;
+    ingrNum = numIngredients[Math.floor(Math.random()*numIngredients.length)];
+    console.log(ingrNum);
+    //ingr = ingredients[Math.floor(Math.random()*ingredients.length)];
+    console.log(ingr);
+    orderIngredientArr[numOrders-1].innerHTML =
+     `${ingrNum + ' ' + ingr}`;
   }
 }
 
