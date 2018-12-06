@@ -1,4 +1,4 @@
-//initializing function to run on load
+/*//initializing function to run on load
 const init = () => {
   let pepperoniIcon = document.getElementById('pepperoni');
   pepperoniIcon.addEventListener('click', randomPepperoni);
@@ -117,10 +117,12 @@ let ingredientLocation = [];
 
 //runs when window loads
 window.onLoad();
+*/
+
 
 //exporting to test file
-if (module) {
+if (typeof module !== 'undefined') {
   module.exports = {
-    randomPepperoni
+    
   };
 }

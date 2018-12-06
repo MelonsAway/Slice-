@@ -1,1 +1,1 @@
-const {randomPepperoni} = require('./main');
+const {} = require('./main');
