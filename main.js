@@ -124,10 +124,18 @@ const addOrder = (order, orders) => {
   return orders;
 };
 
+const cookPizza = (pizza, burner) => {
+  if(pizza[0]) {
+    burner[0].state = 'toppedPizza';
+    pizza[0].state = null;
+  }
+}
+
 
 //exporting to test file
 if (typeof module !== 'undefined') {
   module.exports = {
     addOrder,
+    cookPizza,
   };
 }
