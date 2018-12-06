@@ -119,10 +119,15 @@ let ingredientLocation = [];
 window.onLoad();
 */
 
+const addOrder = (order, orders) => {
+  orders.push(order);
+  return orders;
+};
+
 
 //exporting to test file
 if (typeof module !== 'undefined') {
   module.exports = {
-    
+    addOrder,
   };
 }
