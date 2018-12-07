@@ -121,8 +121,22 @@ window.onLoad();
 
 
 //exporting to test file
+let pizza = [];
+let topping = {};
+const addTopping = (pizza, toppingName) => {
+  topping.type = toppingName;
+    if(topping.type='pepperoni') {
+      topping = {
+        type: 'pepperoni',
+        x: /*math.random*/ 30,
+        y: /*math.random*/40,
+      };
+    pizza.push(topping);
+    return topping;
+  };
+};
 if (typeof module !== 'undefined') {
   module.exports = {
-    
+    addTopping,
   };
-}
+};
