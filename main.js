@@ -163,6 +163,36 @@ const draw = (orders, toppings, burner) => {
 
 window.onload = init;
 
+const init = () => {
+  const orderList = document.createElement('ul');
+  orderList.className = 'orderList';
+  document.body.appendChild(orderList);
+
+  const order = document.createElement('li');
+  order.className = 'order';
+  orderList.appendChild(order);
+  //EVENTUALLY WE WANT TO PUT A CREATE ORDER FUNCTION IN HERE MAYBE
+
+  const pizzaBox = document.createElement('div');
+  pizzaBox.className = 'pizzaBox';
+  document.body.appendChild(pizzaBox);
+
+  const burnerBox = document.createElement('div');
+  burnerBox.className = 'burnerBox';
+  document.body.appendChild(burnerBox);
+
+  const ingredientList = document.createElement('ul');
+  ingredientList.className = 'ingredientList';
+  document.body.appendChild(ingredientList);
+
+  const ingredient = document.createElement('li');
+  ingredient.className = 'ingredient';
+  ingredientList.appendChild(ingredient);
+
+  const completeButton = document.createElement('button');
+  document.body.appendChild(completeButton);
+};
+
 //exporting to test file
 if (typeof module !== 'undefined') {
   module.exports = {
@@ -170,5 +200,6 @@ if (typeof module !== 'undefined') {
     cookPizza,
     completeOrder,
     draw,
+    init,
   };
 };

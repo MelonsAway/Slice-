@@ -1,4 +1,4 @@
-const {addOrder, cookPizza, completeOrder, draw} = require('./main');
+const {addOrder, cookPizza, completeOrder, draw, init} = require('./main');
 
 describe('add order', () => {
   test('an order should be added to any existing items', () => {
@@ -113,6 +113,35 @@ describe('draw', () => {
     //redraw pizza with toppings on burner
     const burnerEl = document.getElementById('burnerBox');
     expect(burnerEl.firstChild).not.toBe(null);
+  });
+});
+
+describe('init', () => {
+  //test that 2 uls + li items, 2 divs, and a button were created
+  test('correct elements were created', () => {
+    //document should be empty
+    expect(document.body.firstChild).toBeNull();
+    //run function
+    init();
+    //test orders ul and ingredients ul
+    const ulEls = document.querySelectorAll('ul');
+    expect(ulEls.length).toBe(2);
+    expect(ulEls[0].className).toBe('orderList');
+    expect(ulEls[1].className).toBe('ingredientList');
+    //test order li items
+    const orderEls = document.getElementsByClassName('order');
+    expect(orderEls.length).toBe(1);
+    //test ingredient li items
+    const ingredientEls = document.getElementsByClassName('ingredient');
+    expect(ingredientEls.length).toBe(1);
+    //test pizza div and burner div
+    const divEls = document.querySelectorAll('div');
+    expect(divEls.length).toBe(2);
+    expect(divEls[0].className).toBe('pizzaBox');
+    expect(divEls[1].className).toBe('burnerBox');
+    //test complete button
+    const buttonEl = document.querySelector('button');
+    expect(buttonEl).not.toBe(null);
   });
 });
 
