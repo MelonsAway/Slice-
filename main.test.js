@@ -1,10 +1,10 @@
-const {addOrder, cookPizza} = require('./main');
+const {addOrder, cookPizza, completeOrder} = require('./main');
 
 describe('add order', () => {
   test('an order should be added to any existing items', () => {
     //there should be one order in a list of orders
-    let orders = [{number : 3, ingredient : 'pepperoni'}];
-    const order = {number : 5, ingredient : 'pepperoni'};
+    let orders = [{number : 3, topping : 'pepperoni'}];
+    const order = {number : 5, topping : 'pepperoni'};
     expect(orders.length).toBe(1);
     //run function
     addOrder(order, orders);
@@ -16,15 +16,15 @@ describe('add order', () => {
 
 
 describe('cook pizza', () => {
-  //pizza will be redrawn at the stove location
-  test('pizza with toppings should be moved to oven', () => {
+  //pizza with toppings will be redrawn at the burner location
+  test('pizza with toppings should be moved to burner', () => {
     let burner = [{state: null}];
     let pizza = [{type: 'pepperoni', x: 30, y: 40}, {type: 'pepperoni', x: 40, y: 30}];
-    //stove should be empty
+    //burner should be empty
     expect(burner[0].state).toBe(null);
     //run function
     cookPizza(pizza, burner);
-    //stove should contain pizza
+    //burner should contain pizza
     expect(burner[0].state).toBe('toppedPizza');
   });
   //topping pizza will be reset for next order
@@ -47,5 +47,34 @@ describe('cook pizza', () => {
   });
 });
 
+describe('complete order', () => {
+  //test that burner is empty
+  test('burner is emptied', () => {
+    let burner = [{state: 'toppedPizza'}];
+    let pizza = [{type: 'pepperoni', x: 30, y: 40}, {type: 'pepperoni', x: 40, y: 30}];
+    let score = {points: 0};
+    //burner should contain pizza
+    expect(burner[0].state).toBe('toppedPizza');
+    //run function
+    completeOrder(pizza, burner, score);
+    //burner should be empty
+    expect(burner[0].state).toBe(null);
+  });
+  //test that points were added
+  test('points were added based on toppings', () => {
+    let burner = [{state: 'toppedPizza'}];
+    let pizza = [{type: 'pepperoni', x: 30, y: 40}, {type: 'pepperoni', x: 40, y: 30}];
+    let score = {points: 0};
+    //points are 0 before completed
+    expect(score.points).toBe(0);
+    //run function
+    completeOrder(pizza, burner, score);
+    //points are added
+    expect(score.points).not.toEqual(0);
+    //points correspond with toppings
+    expect(score.points).toEqual(pizza.length);
+  });
+});
 
-//draw function that takes 3 global arrays (orders, burners, pizza ingredients)
+
+//draw function that takes 3 global arrays (orders, burners, pizza toppings)

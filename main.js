@@ -125,11 +125,19 @@ const addOrder = (order, orders) => {
 };
 
 const cookPizza = (pizza, burner) => {
-  if(pizza[0]) {
+  if(pizza[0] && burner[0].state == null) {
     burner[0].state = 'toppedPizza';
     pizza[0].state = null;
-  }
-}
+  };
+};
+
+const completeOrder = (pizza, burner, score) => {
+  if(burner[0].state !== null) {
+    burner[0].state = null;
+    score.points += pizza.length;
+    return score;
+  };
+};
 
 
 //exporting to test file
@@ -137,5 +145,6 @@ if (typeof module !== 'undefined') {
   module.exports = {
     addOrder,
     cookPizza,
+    completeOrder,
   };
-}
+};
