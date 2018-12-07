@@ -119,6 +119,79 @@ let ingredientLocation = [];
 window.onLoad();
 */
 
+const addOrder = (order, orders) => {
+  orders.push(order);
+  return orders;
+};
+
+const cookPizza = (toppings, burner) => {
+  if(toppings[0] && burner[0].state == null) {
+    burner[0].state = 'toppedPizza';
+    toppings[0].state = null;
+  };
+};
+
+const completeOrder = (toppings, burner, score) => {
+  if(burner[0].state !== null) {
+    burner[0].state = null;
+    score.points += toppings.length;
+    return score;
+  };
+};
+
+const draw = (orders, toppings, burner) => {
+  for(let order of orders) {
+    let orderEl = document.createElement('li');
+    let orderList = document.querySelector('.orderList');
+    orderEl.className = 'order';
+    orderList.appendChild(orderEl);
+  };
+  for(let topping of toppings) {
+    let toppingEl = document.createElement('img');
+    toppingEl.className = 'topping';
+    pizzaBox.appendChild(toppingEl);
+  };
+  if(burner[0].state == null) {
+    for(let topping of toppings) {
+      let burnerBox = document.querySelector('.burnerBox')
+      let currentToppings = document.querySelector('.topping');
+      burnerBox.setAttribute('style', "background-image: url('images/pizza.png'); background-size: contain; background-repeat: no-repeat;");
+      burnerBox.appendChild(currentToppings);
+    };
+  };
+};
+
+window.onload = init;
+
+const init = () => {
+  const orderList = document.createElement('ul');
+  orderList.className = 'orderList';
+  document.body.appendChild(orderList);
+
+  const order = document.createElement('li');
+  order.className = 'order';
+  orderList.appendChild(order);
+  //EVENTUALLY WE WANT TO PUT A CREATE ORDER FUNCTION IN HERE MAYBE
+
+  const pizzaBox = document.createElement('div');
+  pizzaBox.className = 'pizzaBox';
+  document.body.appendChild(pizzaBox);
+
+  const burnerBox = document.createElement('div');
+  burnerBox.className = 'burnerBox';
+  document.body.appendChild(burnerBox);
+
+  const ingredientList = document.createElement('ul');
+  ingredientList.className = 'ingredientList';
+  document.body.appendChild(ingredientList);
+
+  const ingredient = document.createElement('li');
+  ingredient.className = 'ingredient';
+  ingredientList.appendChild(ingredient);
+
+  const completeButton = document.createElement('button');
+  document.body.appendChild(completeButton);
+};
 
 //exporting to test file
 let pizza = [];
@@ -138,5 +211,10 @@ const addTopping = (pizza, toppingName) => {
 if (typeof module !== 'undefined') {
   module.exports = {
     addTopping,
+    addOrder,
+    cookPizza,
+    completeOrder,
+    draw,
+    init,
   };
 };
