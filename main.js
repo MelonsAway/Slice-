@@ -124,21 +124,44 @@ const addOrder = (order, orders) => {
   return orders;
 };
 
-const cookPizza = (pizza, burner) => {
-  if(pizza[0] && burner[0].state == null) {
+const cookPizza = (toppings, burner) => {
+  if(toppings[0] && burner[0].state == null) {
     burner[0].state = 'toppedPizza';
-    pizza[0].state = null;
+    toppings[0].state = null;
   };
 };
 
-const completeOrder = (pizza, burner, score) => {
+const completeOrder = (toppings, burner, score) => {
   if(burner[0].state !== null) {
     burner[0].state = null;
-    score.points += pizza.length;
+    score.points += toppings.length;
     return score;
   };
 };
 
+const draw = (orders, toppings, burner) => {
+  for(let order of orders) {
+    let orderEl = document.createElement('li');
+    let orderList = document.querySelector('.orderList');
+    orderEl.className = 'order';
+    orderList.appendChild(orderEl);
+  };
+  for(let topping of toppings) {
+    let toppingEl = document.createElement('img');
+    toppingEl.className = 'topping';
+    pizzaBox.appendChild(toppingEl);
+  };
+  if(burner[0].state == null) {
+    for(let topping of toppings) {
+      let burnerBox = document.querySelector('.burnerBox')
+      let currentToppings = document.querySelector('.topping');
+      burnerBox.setAttribute('style', "background-image: url('images/pizza.png'); background-size: contain; background-repeat: no-repeat;");
+      burnerBox.appendChild(currentToppings);
+    };
+  };
+};
+
+window.onload = init;
 
 //exporting to test file
 if (typeof module !== 'undefined') {
@@ -146,5 +169,6 @@ if (typeof module !== 'undefined') {
     addOrder,
     cookPizza,
     completeOrder,
+    draw,
   };
 };
