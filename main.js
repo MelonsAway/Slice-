@@ -119,12 +119,27 @@ let ingredientLocation = [];
 window.onLoad();
 */
 
-const addOrder = (order, orders) => {
+let orders = [];
+let toppings = [{
+  pizza: {},
+  burner: {}
+}];
+
+const fetchRandom = (min, max) => {
+  return Math.floor(Math.random()*(max-min)+min);
+};
+
+const addOrder = (orders) => {
+  let order = {number: Math.floor(Math.random() * (20 - 10) + 10), topping: toppingType};
   orders.push(order);
+  //drawOrders(orders);
+  console.log(orders);
   return orders;
 };
 
-const cookPizza = (toppings, burner) => {
+
+
+/*const cookPizza = (toppings, burner) => {
   if(toppings[0] && burner[0].state == null) {
     burner[0].state = 'toppedPizza';
     toppings[0].state = null;
@@ -137,16 +152,18 @@ const completeOrder = (toppings, burner, score) => {
     score.points += toppings.length;
     return score;
   };
-};
+};*/
 
-const draw = (orders, toppings, burner) => {
-  for(let order of orders) {
+const drawOrders = (orders) => {
+  let orderList = document.querySelector('.orderList');
+  for(let i = 0; i <= orders.length-1; i++) {
     let orderEl = document.createElement('li');
-    let orderList = document.querySelector('.orderList');
     orderEl.className = 'order';
+    let orderText = document.createTextNode(`${orders[orders.length-1].number + ' ' + orders[orders.length-1].topping}`);
+    orderEl.appendChild(orderText);
     orderList.appendChild(orderEl);
   };
-  for(let topping of toppings) {
+  /*for(let topping of toppings) {
     let toppingEl = document.createElement('img');
     toppingEl.className = 'topping';
     pizzaBox.appendChild(toppingEl);
@@ -158,20 +175,13 @@ const draw = (orders, toppings, burner) => {
       burnerBox.setAttribute('style', "background-image: url('images/pizza.png'); background-size: contain; background-repeat: no-repeat;");
       burnerBox.appendChild(currentToppings);
     };
-  };
+  };*/
 };
-
-window.onload = init;
 
 const init = () => {
   const orderList = document.createElement('ul');
   orderList.className = 'orderList';
   document.body.appendChild(orderList);
-
-  const order = document.createElement('li');
-  order.className = 'order';
-  orderList.appendChild(order);
-  //EVENTUALLY WE WANT TO PUT A CREATE ORDER FUNCTION IN HERE MAYBE
 
   const pizzaBox = document.createElement('div');
   pizzaBox.className = 'pizzaBox';
@@ -181,25 +191,28 @@ const init = () => {
   burnerBox.className = 'burnerBox';
   document.body.appendChild(burnerBox);
 
-  const ingredientList = document.createElement('ul');
-  ingredientList.className = 'ingredientList';
-  document.body.appendChild(ingredientList);
+  const toppingList = document.createElement('ul');
+  toppingList.className = 'toppingList';
+  document.body.appendChild(toppingList);
 
-  const ingredient = document.createElement('li');
-  ingredient.className = 'ingredient';
-  ingredientList.appendChild(ingredient);
+  const topping = document.createElement('li');
+  topping.className = 'topping';
+  toppingList.appendChild(topping);
 
   const completeButton = document.createElement('button');
   document.body.appendChild(completeButton);
 };
 
+window.onload = init;
+
 //exporting to test file
 if (typeof module !== 'undefined') {
   module.exports = {
+    fetchRandom,
     addOrder,
-    cookPizza,
-    completeOrder,
-    draw,
+    /*cookPizza,
+    completeOrder,*/
+    drawOrders,
     init,
   };
 };

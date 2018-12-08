@@ -1,21 +1,37 @@
-const {addOrder, cookPizza, completeOrder, draw, init} = require('./main');
+const {fetchRandom, addOrder, /*cookPizza, completeOrder,*/ drawOrders, init} = require('./main');
+
+beforeEach(() => {
+  // reset the document
+  document.body.innerHTML = '';
+})
+
+describe('fetchRandom', () => {
+  test('get random number within range', () => {
+    let random = fetchRandom(10, 20);
+    expect(random).toBeGreaterThan(10);
+    expect(random).toBeLessThan(20);
+  });
+});
 
 describe('add order', () => {
   test('an order should be added to any existing items', () => {
     //there should be one order in a list of orders
-    let orders = [{number : 3, topping : 'pepperoni'}];
-    const order = {number : 5, topping : 'pepperoni'};
+    let orders = [{number: 3, topping: 'pepperoni'}];
+    const orderList = document.createElement('ul');
+    orderList.className = 'orderList';
+    document.body.appendChild(orderList);
     expect(orders.length).toBe(1);
     //run function
-    addOrder(order, orders);
+    console.log(orders);
+    addOrder(orders);
     //there should be 2 orders in correct order
     expect(orders.length).toBe(2);
-    expect(orders[1]).toBe(order);
+    expect(orders[0]).toEqual({number : 3, topping : 'pepperoni'});
   });
 });
 
 
-describe('cook pizza', () => {
+/*describe('cook pizza', () => {
   //pizza with toppings will be redrawn at the burner location
   test('pizza with toppings should be moved to burner', () => {
     let burner = [{state: null}];
@@ -74,23 +90,24 @@ describe('complete order', () => {
     //points correspond with toppings
     expect(score.points).toEqual(toppings.length);
   });
-});
+});*/
 
 //draw is going to accept the current orders, toppings, and current state of the burner and draw the screen accordingly
-describe('draw', () => {
+describe('drawOrders', () => {
   test('updates the orders', () => {
     const orders = [{number : 5, topping : 'pepperoni'}, {number : 3, topping : 'pepperoni'}];
     const toppings = [{}];
     const burner = [{state: null}];
+    const orderList = document.createElement('ul');
+    orderList.className = 'orderList';
+    document.body.appendChild(orderList);
     //run draw function
-    draw(orders, toppings, burner);
+    drawOrders(orders);
     //draw li items for every order
-   const orderEls = document.getElementsByClassName('order');
+   const orderEls = document.querySelectorAll('.order');
    expect(orderEls.length).toEqual(2);
-   expect(orderEls[0].number).toBe(5);
-   expect(orderEls[1].number).toBe(3);
   });
-  test('updates the pizza toppings', () => {
+  /*test('updates the pizza toppings', () => {
     const orders = [{}];
     const toppings = [{type: 'pepperoni', x: 30, y: 40}, {type: 'pepperoni', x: 40, y: 30}];
     const burner = [{state: null}];
@@ -113,7 +130,7 @@ describe('draw', () => {
     //redraw pizza with toppings on burner
     const burnerEl = document.getElementById('burnerBox');
     expect(burnerEl.firstChild).not.toBe(null);
-  });
+  });*/
 });
 
 describe('init', () => {
@@ -123,17 +140,14 @@ describe('init', () => {
     expect(document.body.firstChild).toBeNull();
     //run function
     init();
-    //test orders ul and ingredients ul
+    //test orders ul and toppings ul
     const ulEls = document.querySelectorAll('ul');
     expect(ulEls.length).toBe(2);
     expect(ulEls[0].className).toBe('orderList');
-    expect(ulEls[1].className).toBe('ingredientList');
-    //test order li items
-    const orderEls = document.getElementsByClassName('order');
-    expect(orderEls.length).toBe(1);
-    //test ingredient li items
-    const ingredientEls = document.getElementsByClassName('ingredient');
-    expect(ingredientEls.length).toBe(1);
+    expect(ulEls[1].className).toBe('toppingList');
+    //test topping li items
+    const toppingEls = document.getElementsByClassName('topping');
+    expect(toppingEls.length).toBe(1);
     //test pizza div and burner div
     const divEls = document.querySelectorAll('div');
     expect(divEls.length).toBe(2);
@@ -146,3 +160,5 @@ describe('init', () => {
 });
 
 //draw function that takes 3 global arrays (orders, pizza toppings, burner)
+
+//smaller unit functions that return a value are more important to test
