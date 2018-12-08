@@ -133,9 +133,8 @@ const addOrder = (num, list) => {
   return [...list, {
     number: num,
     topping: 'pepperoni'
-  }]
+  }];
 };
-
 
 
 /*const cookPizza = (toppings, burner) => {
