@@ -26,6 +26,23 @@ describe('add order', () => {
   });
 });
 
+describe('draw orders', () => {
+  test('should render an <li> for each order', () => {
+    const ulEl = document.createElement('ul');
+    ulEl.className = 'orderList';
+    document.body.appendChild(ulEl);
+    const orders = [{number: 11,
+                    topping: 'pepperoni'},
+                    {number: 13,
+                    topping: 'pepperoni'}];
+    drawOrders(orders);
+    const liEls = document.querySelectorAll('.order');
+    console.log(liEls);
+    expect(liEls.length).toBe(2);
+    expect(liEls[0].textContent).toBe('11 pepperoni');
+    expect(liEls[1].textContent).toBe('13 pepperoni');
+  });
+});
 
 /*describe('cook pizza', () => {
   //pizza with toppings will be redrawn at the burner location
@@ -88,21 +105,7 @@ describe('complete order', () => {
   });
 });*/
 
-//draw is going to accept the current orders, toppings, and current state of the burner and draw the screen accordingly
-describe('drawOrders', () => {
-  test('updates the orders', () => {
-    const orders = [{number : 5, topping : 'pepperoni'}, {number : 3, topping : 'pepperoni'}];
-    const toppings = [{}];
-    const burner = [{state: null}];
-    const orderList = document.createElement('ul');
-    orderList.className = 'orderList';
-    document.body.appendChild(orderList);
-    //run draw function
-    drawOrders(orders);
-    //draw li items for every order
-   const orderEls = document.querySelectorAll('.order');
-   expect(orderEls.length).toEqual(2);
-  });
+
   /*test('updates the pizza toppings', () => {
     const orders = [{}];
     const toppings = [{type: 'pepperoni', x: 30, y: 40}, {type: 'pepperoni', x: 40, y: 30}];
@@ -127,7 +130,6 @@ describe('drawOrders', () => {
     const burnerEl = document.getElementById('burnerBox');
     expect(burnerEl.firstChild).not.toBe(null);
   });*/
-});
 
 describe('init', () => {
   //test that 2 uls + li items, 2 divs, and a button were created

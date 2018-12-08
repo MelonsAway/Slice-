@@ -136,6 +136,17 @@ const addOrder = (num, list) => {
   }];
 };
 
+const drawOrders = (list) => {
+  const orderList = document.querySelector('.orderList');
+  //orderList.innerHTML = '';
+  for(let item of list) {
+    let liEl = document.createElement('li');
+    liEl.className = 'order';
+    let liElText = document.createTextNode(item.number + ' ' + item.topping);
+    liEl.appendChild(liElText);
+    orderList.appendChild(liEl);
+  };
+
 
 /*const cookPizza = (toppings, burner) => {
   if(toppings[0] && burner[0].state == null) {
@@ -152,15 +163,7 @@ const completeOrder = (toppings, burner, score) => {
   };
 };*/
 
-const drawOrders = (orders) => {
-  let orderList = document.querySelector('.orderList');
-  for(let i = 0; i <= orders.length-1; i++) {
-    let orderEl = document.createElement('li');
-    orderEl.className = 'order';
-    let orderText = document.createTextNode(`${orders[orders.length-1].number + ' ' + orders[orders.length-1].topping}`);
-    orderEl.appendChild(orderText);
-    orderList.appendChild(orderEl);
-  };
+
   /*for(let topping of toppings) {
     let toppingEl = document.createElement('img');
     toppingEl.className = 'topping';
