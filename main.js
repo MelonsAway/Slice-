@@ -129,14 +129,12 @@ const fetchRandom = (min, max) => {
   return Math.floor(Math.random()*(max-min)+min);
 };
 
-const addOrder = (orders) => {
-  let order = {number: Math.floor(Math.random() * (20 - 10) + 10), topping: toppingType};
-  orders.push(order);
-  //drawOrders(orders);
-  console.log(orders);
-  return orders;
+const addOrder = (num, list) => {
+  return [...list, {
+    number: num,
+    topping: 'pepperoni'
+  }];
 };
-
 
 
 /*const cookPizza = (toppings, burner) => {

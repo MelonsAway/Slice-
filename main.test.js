@@ -17,16 +17,12 @@ describe('add order', () => {
   test('an order should be added to any existing items', () => {
     //there should be one order in a list of orders
     let orders = [{number: 3, topping: 'pepperoni'}];
-    const orderList = document.createElement('ul');
-    orderList.className = 'orderList';
-    document.body.appendChild(orderList);
     expect(orders.length).toBe(1);
     //run function
-    console.log(orders);
-    addOrder(orders);
+    orders = addOrder(12, orders);
     //there should be 2 orders in correct order
     expect(orders.length).toBe(2);
-    expect(orders[0]).toEqual({number : 3, topping : 'pepperoni'});
+    expect(orders[1].number).toBe(12);
   });
 });
 
