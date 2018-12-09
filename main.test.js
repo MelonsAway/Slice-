@@ -1,4 +1,4 @@
-const {fetchRandom, addOrder, /*cookPizza, completeOrder,*/ drawOrders, init} = require('./main');
+const {fetchRandom, addOrder, drawOrders, cookPizza, /*completeOrder,*/  init} = require('./main');
 
 beforeEach(() => {
   // reset the document
@@ -8,7 +8,7 @@ beforeEach(() => {
 describe('fetchRandom', () => {
   test('get random number within range', () => {
     let random = fetchRandom(10, 20);
-    expect(random).toBeGreaterThan(10);
+    expect(random).toBeGreaterThanOrEqual(10);
     expect(random).toBeLessThan(20);
   });
 });
@@ -31,16 +31,40 @@ describe('draw orders', () => {
     const ulEl = document.createElement('ul');
     ulEl.className = 'orderList';
     document.body.appendChild(ulEl);
-    const orders = [{number: 11,
-                    topping: 'pepperoni'},
-                    {number: 13,
-                    topping: 'pepperoni'}];
+    const orders = [{
+      number: 11,
+      topping: 'pepperoni'},
+      {number: 13,
+      topping: 'pepperoni'}];
     drawOrders(orders);
     const liEls = document.querySelectorAll('.order');
-    console.log(liEls);
     expect(liEls.length).toBe(2);
     expect(liEls[0].textContent).toBe('11 pepperoni');
     expect(liEls[1].textContent).toBe('13 pepperoni');
+  });
+});
+
+describe('cook pizza', () => {
+  test('pizza has all topping objects removed', () => {
+    let toppings = [{
+      pizza: [{type: 'pepperoni', x: 89, y: 135},
+              {type: 'pepperoni', x: 198, y: 74}],
+      burner: []
+    }];
+    toppings = cookPizza(toppings);
+    expect(toppings[0].pizza.length).toBe(undefined);
+  });
+  test('burner has objects updated to match the previous pizza', () => {
+    let toppings = [{
+      pizza: [{type: 'pepperoni',x: 89,y: 135},
+              {type: 'pepperoni',x: 198,y: 74}],
+      burner: []
+    }];
+    expect(toppings[0].burner.length).toBe(0);
+    toppings = cookPizza(toppings);
+    expect(toppings[0].burner.length).toBe(2);
+    expect(toppings[0].burner[0].x).toBe(89);
+    expect(toppings[0].burner[1].y).toBe(74);
   });
 });
 
