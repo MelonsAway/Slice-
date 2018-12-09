@@ -133,54 +133,78 @@ const addTopping = (pizza, toppingName) => {
   };
 };
 
-const addOrder = (order, orders) => {
-  orders.push(order);
-  return orders;
+let orders = [];
+let toppings = [{
+  pizza: {},
+  burner: {}
+}];
+let score = {points: 0};
+
+const fetchRandom = (min, max) => {
+  return Math.floor(Math.random()*(max-min)+min);
 };
 
-const cookPizza = (toppings, burner) => {
-  if(toppings[0] && burner[0].state == null) {
-    burner[0].state = 'toppedPizza';
-    toppings[0].state = null;
+const addOrder = (num, list) => {
+  return [...list, {
+    number: num,
+    topping: 'pepperoni'
+  }];
+};
+
+const drawOrders = (list) => {
+  const orderList = document.querySelector('.orderList');
+  //orderList.innerHTML = '';
+  for(let item of list) {
+    let liEl = document.createElement('li');
+    liEl.className = 'order';
+    let liElText = document.createTextNode(item.number + ' ' + item.topping);
+    liEl.appendChild(liElText);
+    orderList.appendChild(liEl);
   };
 };
 
-const completeOrder = (toppings, burner, score) => {
-  if(burner[0].state !== null) {
-    burner[0].state = null;
-    score.points += toppings.length;
-    return score;
-  };
-};
-
+<<<<<<< HEAD
 const draw = (pizza) => {
   pizzaBox.className = 'pizzaBox';
 }
+  };
+  return toppings;
+};
 
-/*
-const draw = (orders, toppings, burner) => {
-  for(let order of orders) {
-    let orderEl = document.createElement('li');
-    let orderList = document.querySelector('.orderList');
-    orderEl.className = 'order';
-    orderList.appendChild(orderEl);
-  };
-  for(let topping of toppings) {
-    let toppingEl = document.createElement('img');
-    toppingEl.className = 'topping';
-    pizzaBox.appendChild(toppingEl);
-  };
-  if(burner[0].state == null) {
-    for(let topping of toppings) {
-      let burnerBox = document.querySelector('.burnerBox')
-      let currentToppings = document.querySelector('.topping');
-      burnerBox.setAttribute('style', "background-image: url('images/pizza.png'); background-size: contain; background-repeat: no-repeat;");
-      burnerBox.appendChild(currentToppings);
+const drawBurnerToppings = (toppings) => {
+  let pizza = toppings[0].pizza;
+  let burnerBox = document.querySelector('.burnerBox');
+  let pizzaBox = document.querySelector('.pizzaBox');
+  if(pizza && toppings[0].burner.length == 0) {
+    let pizzaImg = document.createElement('img');
+    pizzaImg.setAttribute('src', 'images/pizza.png');
+    pizzaImg.setAttribute('style', 'height: 480px; position: absolute; left: 10px; bottom: 10px;');
+    burnerBox.appendChild(pizzaImg);
+    for(let topping of pizza) {
+      let imgEl = document.createElement('img');
+      imgEl.className = `${topping.type}`;
+      imgEl.setAttribute('src', 'images/pepperoni.svg');
+      imgEl.setAttribute('style', `position: absolute; left: ${topping.x}px; bottom: ${topping.y}px`);
+      burnerBox.appendChild(imgEl);
+      pizzaBox.innerHTML = '';
     };
   };
 };
 */
 
+
+const completeOrder = (toppings, score) => {
+  if(toppings[0].burner[0]) {
+    score.points += toppings[0].burner.length;
+    toppings[0].burner = [];
+    return score;
+  };
+};
+
+const drawScore = (score) => {
+  let scoreCounter = document.querySelector('.score');
+  scoreCounter.textContent = `Score: ${score.points}`;
+};
 
 
 const init = () => {
@@ -188,30 +212,36 @@ const init = () => {
   orderList.className = 'orderList';
   document.body.appendChild(orderList);
 
-  const order = document.createElement('li');
-  order.className = 'order';
-  orderList.appendChild(order);
-  //EVENTUALLY WE WANT TO PUT A CREATE ORDER FUNCTION IN HERE MAYBE
+  const containerBox = document.createElement('div');
+  containerBox.className = 'containerBox';
+  document.body.appendChild(containerBox);
 
   const pizzaBox = document.createElement('div');
   pizzaBox.className = 'pizzaBox';
-  document.body.appendChild(pizzaBox);
+  containerBox.appendChild(pizzaBox);
 
   const burnerBox = document.createElement('div');
   burnerBox.className = 'burnerBox';
-  document.body.appendChild(burnerBox);
+  containerBox.appendChild(burnerBox);
 
-  const ingredientList = document.createElement('ul');
-  ingredientList.className = 'ingredientList';
-  document.body.appendChild(ingredientList);
+  const toppingList = document.createElement('ul');
+  toppingList.className = 'toppingList';
+  document.body.appendChild(toppingList);
 
-  const ingredient = document.createElement('li');
-  ingredient.className = 'ingredient';
-  ingredientList.appendChild(ingredient);
+  const toppingIcon = document.createElement('li');
+  toppingIcon.className = 'toppingIcon';
+  toppingList.appendChild(toppingIcon);
+
+  const scoreCounter = document.createElement('li');
+  scoreCounter.className = 'score';
+  scoreCounter.textContent = `Score: ${score.points}`;
+  toppingList.appendChild(scoreCounter);
 
   const completeButton = document.createElement('button');
   document.body.appendChild(completeButton);
 };
+
+window.onload = init;
 
 //exporting to test file
 window.onload = init;
@@ -219,11 +249,14 @@ window.onload = init;
 
 if (typeof module !== 'undefined') {
   module.exports = {
-    addTopping,
+
+    fetchRandom,
     addOrder,
+    drawOrders,
     cookPizza,
+    drawBurnerToppings,
     completeOrder,
-    draw,
+    drawScore,
     init,
   };
 };

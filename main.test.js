@@ -1,3 +1,20 @@
+<<<<<<< HEAD
+=======
+const {fetchRandom, addOrder, drawOrders, cookPizza, drawBurnerToppings, completeOrder, drawScore, init} = require('./main');
+
+beforeEach(() => {
+  // reset the document
+  document.body.innerHTML = '';
+})
+
+describe('fetchRandom', () => {
+  test('get random number within range', () => {
+    let random = fetchRandom(10, 20);
+    expect(random).toBeGreaterThanOrEqual(10);
+    expect(random).toBeLessThan(20);
+  });
+});
+>>>>>>> 2b3c576a7cc25e23c63a911c2ec7255d9c5429ad
 
 const {addOrder, cookPizza, completeOrder, addTopping, draw, init} = require('./main');let pizza = [];
 let topping = {};
@@ -27,94 +44,184 @@ describe('draw', () => {
 describe('add order', () => {
   test('an order should be added to any existing items', () => {
     //there should be one order in a list of orders
-    let orders = [{number : 3, topping : 'pepperoni'}];
-    const order = {number : 5, topping : 'pepperoni'};
+    let orders = [{number: 3, topping: 'pepperoni'}];
     expect(orders.length).toBe(1);
     //run function
-    addOrder(order, orders);
+    orders = addOrder(12, orders);
     //there should be 2 orders in correct order
     expect(orders.length).toBe(2);
-    expect(orders[1]).toBe(order);
+    expect(orders[1].number).toBe(12);
   });
 });
 
+describe('draw orders', () => {
+  test('should render an <li> for each order', () => {
+    const ulEl = document.createElement('ul');
+    ulEl.className = 'orderList';
+    document.body.appendChild(ulEl);
+    const orders = [{
+      number: 11,
+      topping: 'pepperoni'},
+      {number: 13,
+      topping: 'pepperoni'}];
+    drawOrders(orders);
+    const liEls = document.querySelectorAll('.order');
+    expect(liEls.length).toBe(2);
+    expect(liEls[0].textContent).toBe('11 pepperoni');
+    expect(liEls[1].textContent).toBe('13 pepperoni');
+  });
+});
 
 describe('cook pizza', () => {
-  //pizza with toppings will be redrawn at the burner location
-  test('pizza with toppings should be moved to burner', () => {
-    let burner = [{state: null}];
-    let toppings = [{type: 'pepperoni', x: 30, y: 40}, {type: 'pepperoni', x: 40, y: 30}];
-    //burner should be empty
-    expect(burner[0].state).toBe(null);
-    //run function
-    cookPizza(toppings, burner);
-    //burner should contain pizza
-    expect(burner[0].state).toBe('toppedPizza');
+  test('pizza has all topping objects removed', () => {
+    let toppings = [{
+      pizza: [{type: 'pepperoni', x: 89, y: 135},
+              {type: 'pepperoni', x: 198, y: 74}],
+      burner: []
+    }];
+    toppings = cookPizza(toppings);
+    expect(toppings[0].pizza.length).toBe(0);
   });
-  //topping pizza will be reset for next order
-  test('topping pizza should be cleared', () => {
-    let burner = [{state: null}];
-    let toppings = [{type: 'pepperoni', x: 30, y: 40}, {type: 'pepperoni', x: 40, y: 30}];
-    //run function
-    cookPizza(toppings, burner);
-    //topping station should reset pizza
-    expect(toppings[0].state).toBe(null);
+  test('burner has objects updated to match the previous pizza', () => {
+    let toppings = [{
+      pizza: [{type: 'pepperoni',x: 89,y: 135},
+              {type: 'pepperoni',x: 198,y: 74}],
+      burner: []
+    }];
+    expect(toppings[0].burner.length).toBe(0);
+    toppings = cookPizza(toppings);
+    expect(toppings[0].burner.length).toBe(2);
+    expect(toppings[0].burner[0].x).toBe(89);
+    expect(toppings[0].burner[1].y).toBe(74);
   });
-  //a pizza without toppings shouldn't affect the burner
-  test("pizza w/out toppings should\'t add to burner", () => {
-    let burner = [{state: null}];
-    let toppings = [];
-    //run function
-    cookPizza(toppings, burner);
-    //expect burner to stay empty
-    expect(burner[0].state).toBe(null);
+});
+
+describe('draw burner toppings', () => {
+  test('toppings were created on a burner accordingly', () => {
+    //burnerBox
+    const burnerBox = document.createElement('div');
+    burnerBox.className = 'burnerBox';
+    document.body.appendChild(burnerBox);
+    //pizzaBox
+    const pizzaBox = document.createElement('div');
+    pizzaBox.className = "pizzaBox";
+    document.body.appendChild(pizzaBox);
+    //sample pepperoni
+    let pepperoni1 = document.createElement('img');
+    pepperoni1.className = "pepperoni";
+    pepperoni1.setAttribute('style', `position: absolute; left: 89; bottom: 135`);
+    pizzaBox.appendChild(pepperoni1);
+    //sample pepperoni 2
+    let pepperoni2 = document.createElement('img');
+    pepperoni2.className = "pepperoni";
+    pepperoni2.setAttribute('style', `position: absolute; left: 198; bottom: 74`);
+    pizzaBox.appendChild(pepperoni2);
+    //toppings parameter
+    let toppings = [{
+      pizza: [{type: 'pepperoni',x: 89,y: 135},
+              {type: 'pepperoni',x: 198,y: 74}],
+      burner: []
+    }];
+    expect(burnerBox.firstChild).toBe(null);
+    drawBurnerToppings(toppings);
+    let pepperonis = document.querySelectorAll('.burnerBox .pepperoni');
+    expect(burnerBox.firstChild.src).toBe("http://localhost/images/pizza.png");
+    expect(burnerBox.childNodes.length).toBe(3);
+    expect(burnerBox.childNodes[1].style.left).toBe('89px');
+    expect(burnerBox.childNodes[2].style.bottom).toBe('74px');
+  });
+  test('toppings were removed from pizza accordingly', () => {
+    //pizzaBox
+    const pizzaBox = document.createElement('div');
+    pizzaBox.className = "pizzaBox";
+    document.body.appendChild(pizzaBox);
+    //burnerBox
+    const burnerBox = document.createElement('div');
+    burnerBox.className = 'burnerBox';
+    document.body.appendChild(burnerBox);
+    //sample pepperoni
+    let pepperoni1 = document.createElement('img');
+    pepperoni1.className = "pepperoni";
+    pepperoni1.setAttribute('style', `position: absolute; left: 89; bottom: 135`);
+    pizzaBox.appendChild(pepperoni1);
+    //toppings parameter
+    let toppings = [{
+      pizza: [{type: 'pepperoni',x: 89,y: 135}],
+      burner: []
+    }];
+    let pepperonis = document.querySelectorAll('.pizzaBox .pepperoni');
+    expect(pizzaBox.childNodes.length).toBe(1);
+    drawBurnerToppings(toppings);
+    expect(pizzaBox.childNodes.length).toBe(0);
   });
 });
 
 describe('complete order', () => {
   //test that burner is empty
   test('burner is emptied', () => {
-    let burner = [{state: 'toppedPizza'}];
-    let toppings = [{type: 'pepperoni', x: 30, y: 40}, {type: 'pepperoni', x: 40, y: 30}];
+    let toppings = [{
+      pizza: [],
+      burner: [{type: 'pepperoni',x: 89,y: 135},
+              {type: 'pepperoni',x: 198,y: 74}]
+    }];
     let score = {points: 0};
     //burner should contain pizza
-    expect(burner[0].state).toBe('toppedPizza');
+    expect(toppings[0].burner[0]).not.toBe(null);
     //run function
-    completeOrder(toppings, burner, score);
+    score = completeOrder(toppings, score);
     //burner should be empty
-    expect(burner[0].state).toBe(null);
+    expect(toppings[0].burner[0]).toBe(undefined);
   });
   //test that points were added
   test('points were added based on toppings', () => {
-    let burner = [{state: 'toppedPizza'}];
-    let toppings = [{type: 'pepperoni', x: 30, y: 40}, {type: 'pepperoni', x: 40, y: 30}];
+    let toppings = [{
+      pizza: [],
+      burner: [{type: 'pepperoni',x: 89,y: 135},
+              {type: 'pepperoni',x: 198,y: 74}]
+    }];
     let score = {points: 0};
+    let numberToppings = toppings[0].burner.length;
     //points are 0 before completed
     expect(score.points).toBe(0);
     //run function
-    completeOrder(toppings, burner, score);
+    score = completeOrder(toppings, score);
     //points are added
     expect(score.points).not.toEqual(0);
     //points correspond with toppings
-    expect(score.points).toEqual(toppings.length);
+    expect(score.points).toEqual(numberToppings);
   });
 });
 
-//draw is going to accept the current orders, toppings, and current state of the burner and draw the screen accordingly
-describe('draw', () => {
-  test('updates the orders', () => {
-    const orders = [{number : 5, topping : 'pepperoni'}, {number : 3, topping : 'pepperoni'}];
-    const toppings = [{}];
-    const burner = [{state: null}];
-    //run draw function
-    draw(orders, toppings, burner);
-    //draw li items for every order
-   const orderEls = document.getElementsByClassName('order');
-   expect(orderEls.length).toEqual(2);
-   expect(orderEls[0].number).toBe(5);
-   expect(orderEls[1].number).toBe(3);
+describe('draw score', () => {
+  test('score text has been updated', () => {
+    //score before pizza is made
+    let score = {points: 0};
+    //topping list
+    const toppingList = document.createElement('ul');
+    toppingList.className = 'toppingList';
+    document.body.appendChild(toppingList);
+    //pepperoni icon
+    const toppingIcon = document.createElement('li');
+    toppingIcon.className = 'toppingIcon';
+    toppingList.appendChild(toppingIcon);
+      //score counter li item
+    const scoreCounter = document.createElement('li');
+    scoreCounter.className = 'score';
+    scoreCounter.textContent = `Score: ${score.points}`;
+    toppingList.appendChild(scoreCounter);
+    //text should be score of 0
+    expect(scoreCounter.textContent).toBe('Score: 0');
+    //score updates after pizza is made
+    score = {points: 2};
+    //run function
+    drawScore(score);
+    //text should be score of 2
+    expect(scoreCounter.textContent).toBe('Score: 2');
   });
-  test('updates the pizza toppings', () => {
+});
+
+
+  /*test('updates the pizza toppings', () => {
     const orders = [{}];
     const toppings = [{type: 'pepperoni', x: 30, y: 40}, {type: 'pepperoni', x: 40, y: 30}];
     const burner = [{state: null}];
@@ -137,8 +244,7 @@ describe('draw', () => {
     //redraw pizza with toppings on burner
     const burnerEl = document.getElementById('burnerBox');
     expect(burnerEl.firstChild).not.toBe(null);
-  });
-});
+  });*/
 
 describe('init', () => {
   //test that 2 uls + li items, 2 divs, and a button were created
@@ -147,19 +253,19 @@ describe('init', () => {
     expect(document.body.firstChild).toBeNull();
     //run function
     init();
-    //test orders ul and ingredients ul
+    //test orders ul and toppings ul
     const ulEls = document.querySelectorAll('ul');
     expect(ulEls.length).toBe(2);
     expect(ulEls[0].className).toBe('orderList');
-    expect(ulEls[1].className).toBe('ingredientList');
-    //test order li items
-    const orderEls = document.getElementsByClassName('order');
-    expect(orderEls.length).toBe(1);
-    //test ingredient li items
-    const ingredientEls = document.getElementsByClassName('ingredient');
-    expect(ingredientEls.length).toBe(1);
+    expect(ulEls[1].className).toBe('toppingList');
+    //test topping li items
+    const toppingEls = document.getElementsByClassName('toppingIcon');
+    expect(toppingEls.length).toBe(1);
+    //test container div
+    const containerDiv = document.getElementsByClassName('containerBox');
+    expect(containerDiv.length).toBe(1);
     //test pizza div and burner div
-    const divEls = document.querySelectorAll('div');
+    const divEls = document.querySelectorAll('.containerBox div');
     expect(divEls.length).toBe(2);
     expect(divEls[0].className).toBe('pizzaBox');
     expect(divEls[1].className).toBe('burnerBox');
@@ -170,3 +276,5 @@ describe('init', () => {
 });
 
 //draw function that takes 3 global arrays (orders, pizza toppings, burner)
+
+//smaller unit functions that return a value are more important to test
