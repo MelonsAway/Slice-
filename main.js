@@ -186,6 +186,10 @@ const completeOrder = (toppings, score) => {
   };
 };
 
+const drawScore = (score) => {
+  let scoreCounter = document.querySelector('.score');
+  scoreCounter.textContent = `Score: ${score.points}`;
+};
 
 
 const init = () => {
@@ -213,6 +217,11 @@ const init = () => {
   toppingIcon.className = 'toppingIcon';
   toppingList.appendChild(toppingIcon);
 
+  const scoreCounter = document.createElement('li');
+  scoreCounter.className = 'score';
+  scoreCounter.textContent = `Score: ${score.points}`;
+  toppingList.appendChild(scoreCounter);
+
   const completeButton = document.createElement('button');
   document.body.appendChild(completeButton);
 };
@@ -228,6 +237,7 @@ if (typeof module !== 'undefined') {
     cookPizza,
     drawBurnerToppings,
     completeOrder,
+    drawScore,
     init,
   };
 };
