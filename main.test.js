@@ -1,4 +1,4 @@
-const {fetchRandom, addOrder, drawOrders, cookPizza, drawBurnerToppings, completeOrder, init} = require('./main');
+const {fetchRandom, addOrder, drawOrders, cookPizza, drawBurnerToppings, completeOrder, drawScore, init} = require('./main');
 
 beforeEach(() => {
   // reset the document
@@ -161,6 +161,34 @@ describe('complete order', () => {
     expect(score.points).not.toEqual(0);
     //points correspond with toppings
     expect(score.points).toEqual(numberToppings);
+  });
+});
+
+describe('draw score', () => {
+  test('score text has been updated', () => {
+    //score before pizza is made
+    let score = {points: 0};
+    //topping list
+    const toppingList = document.createElement('ul');
+    toppingList.className = 'toppingList';
+    document.body.appendChild(toppingList);
+    //pepperoni icon
+    const toppingIcon = document.createElement('li');
+    toppingIcon.className = 'toppingIcon';
+    toppingList.appendChild(toppingIcon);
+      //score counter li item
+    const scoreCounter = document.createElement('li');
+    scoreCounter.className = 'score';
+    scoreCounter.textContent = `Score: ${score.points}`;
+    toppingList.appendChild(scoreCounter);
+    //text should be score of 0
+    expect(scoreCounter.textContent).toBe('Score: 0');
+    //score updates after pizza is made
+    score = {points: 2};
+    //run function
+    drawScore(score);
+    //text should be score of 2
+    expect(scoreCounter.textContent).toBe('Score: 2');
   });
 });
 

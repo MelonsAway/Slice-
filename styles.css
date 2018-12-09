@@ -22,10 +22,13 @@
   padding: 3rem;
   list-style-type: none;
   margin: 0;
+  display: flex;
+  justify-content: space-between;
 }
 
 .toppingIcon {
   height: 100px;
+  width: 100px;
   background-image: url('images/pepperoni.svg');
   background-repeat: no-repeat;
 }
