@@ -1,4 +1,4 @@
-const {fetchRandom, addOrder, drawOrders, cookPizza, drawBurnerToppings, /*completeOrder,*/  init} = require('./main');
+const {fetchRandom, addOrder, drawOrders, cookPizza, drawBurnerToppings, completeOrder, init} = require('./main');
 
 beforeEach(() => {
   // reset the document
@@ -52,7 +52,7 @@ describe('cook pizza', () => {
       burner: []
     }];
     toppings = cookPizza(toppings);
-    expect(toppings[0].pizza.length).toBe(undefined);
+    expect(toppings[0].pizza.length).toBe(0);
   });
   test('burner has objects updated to match the previous pizza', () => {
     let toppings = [{
@@ -128,34 +128,41 @@ describe('draw burner toppings', () => {
   });
 });
 
-/*describe('complete order', () => {
+describe('complete order', () => {
   //test that burner is empty
   test('burner is emptied', () => {
-    let burner = [{state: 'toppedPizza'}];
-    let toppings = [{type: 'pepperoni', x: 30, y: 40}, {type: 'pepperoni', x: 40, y: 30}];
+    let toppings = [{
+      pizza: [],
+      burner: [{type: 'pepperoni',x: 89,y: 135},
+              {type: 'pepperoni',x: 198,y: 74}]
+    }];
     let score = {points: 0};
     //burner should contain pizza
-    expect(burner[0].state).toBe('toppedPizza');
+    expect(toppings[0].burner[0]).not.toBe(null);
     //run function
-    completeOrder(toppings, burner, score);
+    score = completeOrder(toppings, score);
     //burner should be empty
-    expect(burner[0].state).toBe(null);
+    expect(toppings[0].burner[0]).toBe(undefined);
   });
   //test that points were added
   test('points were added based on toppings', () => {
-    let burner = [{state: 'toppedPizza'}];
-    let toppings = [{type: 'pepperoni', x: 30, y: 40}, {type: 'pepperoni', x: 40, y: 30}];
+    let toppings = [{
+      pizza: [],
+      burner: [{type: 'pepperoni',x: 89,y: 135},
+              {type: 'pepperoni',x: 198,y: 74}]
+    }];
     let score = {points: 0};
+    let numberToppings = toppings[0].burner.length;
     //points are 0 before completed
     expect(score.points).toBe(0);
     //run function
-    completeOrder(toppings, burner, score);
+    score = completeOrder(toppings, score);
     //points are added
     expect(score.points).not.toEqual(0);
     //points correspond with toppings
-    expect(score.points).toEqual(toppings.length);
+    expect(score.points).toEqual(numberToppings);
   });
-});*/
+});
 
 
   /*test('updates the pizza toppings', () => {
