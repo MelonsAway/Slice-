@@ -1,4 +1,4 @@
-const {fetchRandom, addOrder, drawOrders, cookPizza, /*completeOrder,*/  init} = require('./main');
+const {fetchRandom, addOrder, drawOrders, cookPizza, drawBurnerToppings, /*completeOrder,*/  init} = require('./main');
 
 beforeEach(() => {
   // reset the document
@@ -68,39 +68,67 @@ describe('cook pizza', () => {
   });
 });
 
-/*describe('cook pizza', () => {
-  //pizza with toppings will be redrawn at the burner location
-  test('pizza with toppings should be moved to burner', () => {
-    let burner = [{state: null}];
-    let toppings = [{type: 'pepperoni', x: 30, y: 40}, {type: 'pepperoni', x: 40, y: 30}];
-    //burner should be empty
-    expect(burner[0].state).toBe(null);
-    //run function
-    cookPizza(toppings, burner);
-    //burner should contain pizza
-    expect(burner[0].state).toBe('toppedPizza');
+describe('draw burner toppings', () => {
+  test('toppings were created on a burner accordingly', () => {
+    //burnerBox
+    const burnerBox = document.createElement('div');
+    burnerBox.className = 'burnerBox';
+    document.body.appendChild(burnerBox);
+    //pizzaBox
+    const pizzaBox = document.createElement('div');
+    pizzaBox.className = "pizzaBox";
+    document.body.appendChild(pizzaBox);
+    //sample pepperoni
+    let pepperoni1 = document.createElement('img');
+    pepperoni1.className = "pepperoni";
+    pepperoni1.setAttribute('style', `position: absolute; left: 89; bottom: 135`);
+    pizzaBox.appendChild(pepperoni1);
+    //sample pepperoni 2
+    let pepperoni2 = document.createElement('img');
+    pepperoni2.className = "pepperoni";
+    pepperoni2.setAttribute('style', `position: absolute; left: 198; bottom: 74`);
+    pizzaBox.appendChild(pepperoni2);
+    //toppings parameter
+    let toppings = [{
+      pizza: [{type: 'pepperoni',x: 89,y: 135},
+              {type: 'pepperoni',x: 198,y: 74}],
+      burner: []
+    }];
+    expect(burnerBox.firstChild).toBe(null);
+    drawBurnerToppings(toppings);
+    let pepperonis = document.querySelectorAll('.burnerBox .pepperoni');
+    expect(burnerBox.firstChild.src).toBe("http://localhost/images/pizza.png");
+    expect(burnerBox.childNodes.length).toBe(3);
+    expect(burnerBox.childNodes[1].style.left).toBe('89px');
+    expect(burnerBox.childNodes[2].style.bottom).toBe('74px');
   });
-  //topping pizza will be reset for next order
-  test('topping pizza should be cleared', () => {
-    let burner = [{state: null}];
-    let toppings = [{type: 'pepperoni', x: 30, y: 40}, {type: 'pepperoni', x: 40, y: 30}];
-    //run function
-    cookPizza(toppings, burner);
-    //topping station should reset pizza
-    expect(toppings[0].state).toBe(null);
-  });
-  //a pizza without toppings shouldn't affect the burner
-  test("pizza w/out toppings should\'t add to burner", () => {
-    let burner = [{state: null}];
-    let toppings = [];
-    //run function
-    cookPizza(toppings, burner);
-    //expect burner to stay empty
-    expect(burner[0].state).toBe(null);
+  test('toppings were removed from pizza accordingly', () => {
+    //pizzaBox
+    const pizzaBox = document.createElement('div');
+    pizzaBox.className = "pizzaBox";
+    document.body.appendChild(pizzaBox);
+    //burnerBox
+    const burnerBox = document.createElement('div');
+    burnerBox.className = 'burnerBox';
+    document.body.appendChild(burnerBox);
+    //sample pepperoni
+    let pepperoni1 = document.createElement('img');
+    pepperoni1.className = "pepperoni";
+    pepperoni1.setAttribute('style', `position: absolute; left: 89; bottom: 135`);
+    pizzaBox.appendChild(pepperoni1);
+    //toppings parameter
+    let toppings = [{
+      pizza: [{type: 'pepperoni',x: 89,y: 135}],
+      burner: []
+    }];
+    let pepperonis = document.querySelectorAll('.pizzaBox .pepperoni');
+    expect(pizzaBox.childNodes.length).toBe(1);
+    drawBurnerToppings(toppings);
+    expect(pizzaBox.childNodes.length).toBe(0);
   });
 });
 
-describe('complete order', () => {
+/*describe('complete order', () => {
   //test that burner is empty
   test('burner is emptied', () => {
     let burner = [{state: 'toppedPizza'}];
