@@ -185,21 +185,25 @@ const init = () => {
   orderList.className = 'orderList';
   document.body.appendChild(orderList);
 
+  const containerBox = document.createElement('div');
+  containerBox.className = 'containerBox';
+  document.body.appendChild(containerBox);
+
   const pizzaBox = document.createElement('div');
   pizzaBox.className = 'pizzaBox';
-  document.body.appendChild(pizzaBox);
+  containerBox.appendChild(pizzaBox);
 
   const burnerBox = document.createElement('div');
   burnerBox.className = 'burnerBox';
-  document.body.appendChild(burnerBox);
+  containerBox.appendChild(burnerBox);
 
   const toppingList = document.createElement('ul');
   toppingList.className = 'toppingList';
   document.body.appendChild(toppingList);
 
-  const topping = document.createElement('li');
-  topping.className = 'topping';
-  toppingList.appendChild(topping);
+  const toppingIcon = document.createElement('li');
+  toppingIcon.className = 'toppingIcon';
+  toppingList.appendChild(toppingIcon);
 
   const completeButton = document.createElement('button');
   document.body.appendChild(completeButton);
