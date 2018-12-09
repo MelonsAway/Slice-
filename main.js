@@ -124,6 +124,7 @@ let toppings = [{
   pizza: {},
   burner: {}
 }];
+let score = {points: 0};
 
 const fetchRandom = (min, max) => {
   return Math.floor(Math.random()*(max-min)+min);
@@ -152,7 +153,7 @@ const drawOrders = (list) => {
 const cookPizza = (toppings) => {
   if(toppings[0].pizza && toppings[0].burner.length == 0) {
     toppings[0].burner = [...toppings[0].pizza];
-    toppings[0].pizza = {};
+    toppings[0].pizza = [];
   };
   return toppings;
 };
@@ -177,28 +178,15 @@ const drawBurnerToppings = (toppings) => {
   };
 };
 
-/*const completeOrder = (toppings, burner, score) => {
-  if(burner[0].state !== null) {
-    burner[0].state = null;
-    score.points += toppings.length;
+const completeOrder = (toppings, score) => {
+  if(toppings[0].burner[0]) {
+    score.points += toppings[0].burner.length;
+    toppings[0].burner = [];
     return score;
   };
-};*/
+};
 
 
-  /*for(let topping of toppings) {
-    let toppingEl = document.createElement('img');
-    toppingEl.className = 'topping';
-    pizzaBox.appendChild(toppingEl);
-  };
-  if(burner[0].state == null) {
-    for(let topping of toppings) {
-      let burnerBox = document.querySelector('.burnerBox')
-      let currentToppings = document.querySelector('.topping');
-      burnerBox.setAttribute('style', "background-image: url('images/pizza.png'); background-size: contain; background-repeat: no-repeat;");
-      burnerBox.appendChild(currentToppings);
-    };
-  };*/
 
 const init = () => {
   const orderList = document.createElement('ul');
@@ -239,7 +227,7 @@ if (typeof module !== 'undefined') {
     drawOrders,
     cookPizza,
     drawBurnerToppings,
-    /*completeOrder,*/
+    completeOrder,
     init,
   };
 };
