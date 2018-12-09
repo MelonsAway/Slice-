@@ -157,6 +157,26 @@ const cookPizza = (toppings) => {
   return toppings;
 };
 
+const drawBurnerToppings = (toppings) => {
+  let pizza = toppings[0].pizza;
+  let burnerBox = document.querySelector('.burnerBox');
+  let pizzaBox = document.querySelector('.pizzaBox');
+  if(pizza && toppings[0].burner.length == 0) {
+    let pizzaImg = document.createElement('img');
+    pizzaImg.setAttribute('src', 'images/pizza.png');
+    pizzaImg.setAttribute('style', 'height: 480px; position: absolute; left: 10px; bottom: 10px;');
+    burnerBox.appendChild(pizzaImg);
+    for(let topping of pizza) {
+      let imgEl = document.createElement('img');
+      imgEl.className = `${topping.type}`;
+      imgEl.setAttribute('src', 'images/pepperoni.svg');
+      imgEl.setAttribute('style', `position: absolute; left: ${topping.x}px; bottom: ${topping.y}px`);
+      burnerBox.appendChild(imgEl);
+      pizzaBox.innerHTML = '';
+    };
+  };
+};
+
 /*const completeOrder = (toppings, burner, score) => {
   if(burner[0].state !== null) {
     burner[0].state = null;
@@ -218,6 +238,7 @@ if (typeof module !== 'undefined') {
     addOrder,
     drawOrders,
     cookPizza,
+    drawBurnerToppings,
     /*completeOrder,*/
     init,
   };
