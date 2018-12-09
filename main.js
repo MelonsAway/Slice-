@@ -146,16 +146,18 @@ const drawOrders = (list) => {
     liEl.appendChild(liElText);
     orderList.appendChild(liEl);
   };
-
-
-/*const cookPizza = (toppings, burner) => {
-  if(toppings[0] && burner[0].state == null) {
-    burner[0].state = 'toppedPizza';
-    toppings[0].state = null;
-  };
 };
 
-const completeOrder = (toppings, burner, score) => {
+
+const cookPizza = (toppings) => {
+  if(toppings[0].pizza && toppings[0].burner.length == 0) {
+    toppings[0].burner = [...toppings[0].pizza];
+    toppings[0].pizza = {};
+  };
+  return toppings;
+};
+
+/*const completeOrder = (toppings, burner, score) => {
   if(burner[0].state !== null) {
     burner[0].state = null;
     score.points += toppings.length;
@@ -177,7 +179,6 @@ const completeOrder = (toppings, burner, score) => {
       burnerBox.appendChild(currentToppings);
     };
   };*/
-};
 
 const init = () => {
   const orderList = document.createElement('ul');
@@ -211,9 +212,9 @@ if (typeof module !== 'undefined') {
   module.exports = {
     fetchRandom,
     addOrder,
-    /*cookPizza,
-    completeOrder,*/
     drawOrders,
+    cookPizza,
+    /*completeOrder,*/
     init,
   };
 };
