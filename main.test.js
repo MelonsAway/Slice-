@@ -168,10 +168,13 @@ describe('init', () => {
     expect(ulEls[0].className).toBe('orderList');
     expect(ulEls[1].className).toBe('toppingList');
     //test topping li items
-    const toppingEls = document.getElementsByClassName('topping');
+    const toppingEls = document.getElementsByClassName('toppingIcon');
     expect(toppingEls.length).toBe(1);
+    //test container div
+    const containerDiv = document.getElementsByClassName('containerBox');
+    expect(containerDiv.length).toBe(1);
     //test pizza div and burner div
-    const divEls = document.querySelectorAll('div');
+    const divEls = document.querySelectorAll('.containerBox div');
     expect(divEls.length).toBe(2);
     expect(divEls[0].className).toBe('pizzaBox');
     expect(divEls[1].className).toBe('burnerBox');

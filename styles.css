@@ -1,52 +1,71 @@
-header {
+.orderList {
   background: #B5B3AA;
   padding: 1rem;
-}
-
-main {
-  background: #4A4947;
-  padding: 5rem;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
+  height: 85px;
+  margin: 0;
 }
 
-footer {
+.order {
+  background-color: #F4F2E9;
+  height: 3rem;
+  width: 13rem;
+  display: inline-block;
+  margin-left: 2rem;
+  text-align: center;
+  padding-top: 3%;
+}
+
+.toppingList {
   background: #B5B3AA;
   padding: 3rem;
+  list-style-type: none;
+  margin: 0;
 }
 
-#pizzaBox {
-  width: 400px;
-  height: 400px;
+.toppingIcon {
+  height: 100px;
+  background-image: url('images/pepperoni.svg');
+  background-repeat: no-repeat;
+}
+
+.containerBox {
+  background: #4A4947;
+  display: flex;
+  justify-content: space-around;
+  padding: 3rem 0;
+}
+
+.pizzaBox {
+  width: 500px;
+  height: 500px;
   background-image: url('images/pizza.png');
   background-repeat: no-repeat;
   background-size: contain;
   position: relative;
+  display: inline-block;
 }
 
-#ovenBox {
-  width: 400px;
-  height: 400px;
+.burnerBox {
+  width: 500px;
+  height: 500px;
   background-image: url('images/stovetop.png');
   background-repeat: no-repeat;
   background-size: contain;
   position: relative;
+  display: inline-block;
 }
 
-#cookButton {
+.pepperoni {
+  height: 75px;
+  background-image: url('images/pepperoni.svg');
+  background-repeat: no-repeat;
+}
+
+/*#cookButton {
   position: absolute;
   left: 35%;
   bottom: -3.5rem;
   font-size: 1.5rem;
-}
-
-.ingredientsIcon {
-  width: 100px;
-}
-
-.orders {
-  background-color: orange;
-  width: 15em;
-  height: auto;
-  display: inline-block;
-}
+}*/
