@@ -18,7 +18,12 @@ describe('addTopping', () => {
     expect(topping.type = 'stuff');
   })
 })
-
+describe('draw', () => {
+  test('creates div', () => {
+    draw(pizza);
+    expect(pizzaBox.class = 'pizzaBox')
+  })
+})
 describe('add order', () => {
   test('an order should be added to any existing items', () => {
     //there should be one order in a list of orders

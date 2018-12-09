@@ -118,6 +118,20 @@ let ingredientLocation = [];
 //runs when window loads
 window.onLoad();
 */
+let pizza = [];
+let topping = {};
+const addTopping = (pizza, toppingName) => {
+  topping.type = toppingName;
+    if(topping.type='pepperoni') {
+      topping = {
+        type: 'pepperoni',
+        x: Math.random*30,
+        y: Math.random*40,
+      };
+    pizza.push(topping);
+    return topping;
+  };
+};
 
 const addOrder = (order, orders) => {
   orders.push(order);
@@ -139,6 +153,11 @@ const completeOrder = (toppings, burner, score) => {
   };
 };
 
+const draw = (pizza) => {
+  pizzaBox.className = 'pizzaBox';
+}
+
+/*
 const draw = (orders, toppings, burner) => {
   for(let order of orders) {
     let orderEl = document.createElement('li');
@@ -160,8 +179,9 @@ const draw = (orders, toppings, burner) => {
     };
   };
 };
+*/
 
-window.onload = init;
+
 
 const init = () => {
   const orderList = document.createElement('ul');
@@ -194,20 +214,9 @@ const init = () => {
 };
 
 //exporting to test file
-let pizza = [];
-let topping = {};
-const addTopping = (pizza, toppingName) => {
-  topping.type = toppingName;
-    if(topping.type='pepperoni') {
-      topping = {
-        type: 'pepperoni',
-        x: /*math.random*/ 30,
-        y: /*math.random*/40,
-      };
-    pizza.push(topping);
-    return topping;
-  };
-};
+window.onload = init;
+
+
 if (typeof module !== 'undefined') {
   module.exports = {
     addTopping,
