@@ -1,4 +1,4 @@
-let orders = [];
+let orders = [{number: 32, topping: 'pepperoni'}, {number: 53, topping: 'pepperoni'}, {number: 31, topping: 'pepperoni'}, {number: 33, topping: 'pepperoni'}, {number: 32, topping: 'pepperoni'}];
 let toppings = [{
   pizza: [],
   burner: []
@@ -91,6 +91,15 @@ const drawScore = (score) => {
 };
 
 const init = () => {
+  const orderButton = document.createElement('button');
+  orderButton.className = 'orderButton';
+  const orderText = document.createTextNode('Receive Order');
+  orderButton.addEventListener('click', event => {
+    drawOrders(orders);
+  });
+  orderButton.appendChild(orderText);
+  document.body.appendChild(orderButton);
+
   const orderList = document.createElement('ul');
   orderList.className = 'orderList';
   document.body.appendChild(orderList);
