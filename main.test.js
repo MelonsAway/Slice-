@@ -1,4 +1,14 @@
-const {fetchRandom, addOrder, drawOrders, cookPizza, drawBurnerToppings, completeOrder, drawScore, init} = require('./main');
+const {
+  fetchRandom,
+  addOrder,
+  drawOrders,
+  cookPizza,
+  drawBurnerToppings,
+  completeOrder,
+  drawScore,
+  completeOrderHandler,
+  init
+} = require('./main');
 
 beforeEach(() => {
   // reset the document
@@ -181,6 +191,10 @@ describe('draw score', () => {
     scoreCounter.className = 'score';
     scoreCounter.textContent = `Score: ${score.points}`;
     toppingList.appendChild(scoreCounter);
+    //burnerBox
+    const burnerBox = document.createElement('div');
+    burnerBox.className = 'burnerBox';
+    document.body.appendChild(burnerBox);
     //text should be score of 0
     expect(scoreCounter.textContent).toBe('Score: 0');
     //score updates after pizza is made
@@ -192,31 +206,30 @@ describe('draw score', () => {
   });
 });
 
-
-  /*test('updates the pizza toppings', () => {
-    const orders = [{}];
-    const toppings = [{type: 'pepperoni', x: 30, y: 40}, {type: 'pepperoni', x: 40, y: 30}];
-    const burner = [{state: null}];
-    //run draw function
-    draw(orders, toppings, burner);
-    //draw pizza toppings on pizza
-    const toppingEls = document.getElementsByClassName('topping');
-    expect(toppingEls.length).toEqual(2);
-    expect(toppingEls[0].x).toBe(30);
-    expect(toppingEls[1].x).toBe(40);
+describe('complete order handler', () => {
+  test('sets score correctly and removes elements from burnerBox', () => {
+    let toppings = [{
+      pizza: [],
+      burner: [{type: 'pepperoni',x: 89,y: 135},
+              {type: 'pepperoni', x: 136, y: 70}]
+    }];
+    const mockEvent = {
+      preventDefault: () => {}
+    };
+    let score = {points: 0};
+    const burnerBox = document.createElement('div');
+    burnerBox.className = 'burnerBox';
+    document.body.appendChild(burnerBox);
+    const scoreCounter = document.createElement('li');
+    scoreCounter.className = 'score';
+    scoreCounter.textContent = `Score: ${score.points}`;
+    document.body.appendChild(scoreCounter);
+    expect(score.points).toBe(0);
+    score = completeOrderHandler(mockEvent, toppings);
+    expect(score.points).toBe(2);
+    expect(burnerBox.childNodes.length).toBe(0);
   });
-  test('updates the burner with a pizza', () => {
-    const orders = [{}];
-    const toppings = [{type: 'pepperoni', x: 30, y: 40}, {type: 'pepperoni', x: 40, y: 30}];
-    const burner = [{state: null}];
-    //run cook pizza function?
-
-    //run draw function
-    draw(orders, toppings, burner);
-    //redraw pizza with toppings on burner
-    const burnerEl = document.getElementById('burnerBox');
-    expect(burnerEl.firstChild).not.toBe(null);
-  });*/
+});
 
 describe('init', () => {
   //test that 2 uls + li items, 2 divs, and a button were created

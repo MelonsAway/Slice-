@@ -121,8 +121,8 @@ window.onLoad();
 
 let orders = [];
 let toppings = [{
-  pizza: {},
-  burner: {}
+  pizza: [],
+  burner: []
 }];
 let score = {points: 0};
 
@@ -188,9 +188,17 @@ const completeOrder = (toppings, score) => {
 
 const drawScore = (score) => {
   let scoreCounter = document.querySelector('.score');
+  let burnerBox = document.querySelector('.burnerBox');
   scoreCounter.textContent = `Score: ${score.points}`;
+  burnerBox.innerHTML = '';
 };
 
+const completeOrderHandler = (event, toppings) => {
+  event.preventDefault();
+  score = completeOrder(toppings, score);
+  drawScore(score);
+  return score;
+};
 
 const init = () => {
   const orderList = document.createElement('ul');
@@ -209,6 +217,27 @@ const init = () => {
   burnerBox.className = 'burnerBox';
   containerBox.appendChild(burnerBox);
 
+  const buttonContainer = document.createElement('div');
+  buttonContainer.className = 'buttonContainer';
+  document.body.appendChild(buttonContainer);
+
+  const cookButton = document.createElement('button');
+  cookButton.className = 'button';
+  const cookText = document.createTextNode('Cook Pizza');
+  cookButton.appendChild(cookText);
+  cookButton.addEventListener('click', () => {
+    cookPizza(toppings);
+    drawBurnerToppings(toppings);
+  });
+  buttonContainer.appendChild(cookButton);
+
+  const completeButton = document.createElement('button');
+  completeButton.className = 'button';
+  const completeText = document.createTextNode('Complete Order');
+  completeButton.addEventListener('click', completeOrderHandler);
+  completeButton.appendChild(completeText);
+  buttonContainer.appendChild(completeButton);
+
   const toppingList = document.createElement('ul');
   toppingList.className = 'toppingList';
   document.body.appendChild(toppingList);
@@ -219,11 +248,8 @@ const init = () => {
 
   const scoreCounter = document.createElement('li');
   scoreCounter.className = 'score';
-  scoreCounter.textContent = `Score: ${score.points}`;
+  scoreCounter.textContent = `Score: 0`;
   toppingList.appendChild(scoreCounter);
-
-  const completeButton = document.createElement('button');
-  document.body.appendChild(completeButton);
 };
 
 window.onload = init;
@@ -238,6 +264,7 @@ if (typeof module !== 'undefined') {
     drawBurnerToppings,
     completeOrder,
     drawScore,
+    completeOrderHandler,
     init,
   };
 };
