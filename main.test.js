@@ -6,7 +6,6 @@ const {
   drawBurnerToppings,
   completeOrder,
   drawScore,
-  completeOrderHandler,
   init
 } = require('./main');
 
@@ -203,31 +202,6 @@ describe('draw score', () => {
     drawScore(score);
     //text should be score of 2
     expect(scoreCounter.textContent).toBe('Score: 2');
-  });
-});
-
-describe('complete order handler', () => {
-  test('sets score correctly and removes elements from burnerBox', () => {
-    let toppings = [{
-      pizza: [],
-      burner: [{type: 'pepperoni',x: 89,y: 135},
-              {type: 'pepperoni', x: 136, y: 70}]
-    }];
-    const mockEvent = {
-      preventDefault: () => {}
-    };
-    let score = {points: 0};
-    const burnerBox = document.createElement('div');
-    burnerBox.className = 'burnerBox';
-    document.body.appendChild(burnerBox);
-    const scoreCounter = document.createElement('li');
-    scoreCounter.className = 'score';
-    scoreCounter.textContent = `Score: ${score.points}`;
-    document.body.appendChild(scoreCounter);
-    expect(score.points).toBe(0);
-    score = completeOrderHandler(mockEvent, toppings);
-    expect(score.points).toBe(2);
-    expect(burnerBox.childNodes.length).toBe(0);
   });
 });
 

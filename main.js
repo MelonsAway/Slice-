@@ -193,13 +193,6 @@ const drawScore = (score) => {
   burnerBox.innerHTML = '';
 };
 
-const completeOrderHandler = (event, toppings) => {
-  event.preventDefault();
-  score = completeOrder(toppings, score);
-  drawScore(score);
-  return score;
-};
-
 const init = () => {
   const orderList = document.createElement('ul');
   orderList.className = 'orderList';
@@ -224,17 +217,20 @@ const init = () => {
   const cookButton = document.createElement('button');
   cookButton.className = 'button';
   const cookText = document.createTextNode('Cook Pizza');
-  cookButton.appendChild(cookText);
-  cookButton.addEventListener('click', () => {
-    cookPizza(toppings);
+  cookButton.addEventListener('click', event => {
     drawBurnerToppings(toppings);
+    cookPizza(toppings);
   });
+  cookButton.appendChild(cookText);
   buttonContainer.appendChild(cookButton);
 
   const completeButton = document.createElement('button');
   completeButton.className = 'button';
   const completeText = document.createTextNode('Complete Order');
-  completeButton.addEventListener('click', completeOrderHandler);
+  completeButton.addEventListener('click', event => {
+    score = completeOrder(toppings, score);
+    drawScore(score);
+  });
   completeButton.appendChild(completeText);
   buttonContainer.appendChild(completeButton);
 
@@ -264,7 +260,6 @@ if (typeof module !== 'undefined') {
     drawBurnerToppings,
     completeOrder,
     drawScore,
-    completeOrderHandler,
     init,
   };
 };
