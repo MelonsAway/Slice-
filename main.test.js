@@ -1,4 +1,17 @@
+<<<<<<< HEAD
 const {fetchRandom, addTopping, addOrder, drawOrders, cookPizza, drawTopping, drawBurnerToppings, completeOrder, drawScore, init} = require('./main');
+=======
+const {
+  fetchRandom,
+  addOrder,
+  drawOrders,
+  cookPizza,
+  drawBurnerToppings,
+  completeOrder,
+  drawScore,
+  init
+} = require('./main');
+>>>>>>> e207b3666965e6585703f0dddc6db12a716f9197
 
 beforeEach(() => {
   // reset the document
@@ -212,6 +225,10 @@ describe('draw score', () => {
     scoreCounter.className = 'score';
     scoreCounter.textContent = `Score: ${score.points}`;
     toppingList.appendChild(scoreCounter);
+    //burnerBox
+    const burnerBox = document.createElement('div');
+    burnerBox.className = 'burnerBox';
+    document.body.appendChild(burnerBox);
     //text should be score of 0
     expect(scoreCounter.textContent).toBe('Score: 0');
     //score updates after pizza is made
@@ -222,32 +239,6 @@ describe('draw score', () => {
     expect(scoreCounter.textContent).toBe('Score: 2');
   });
 });
-
-
-  /*test('updates the pizza toppings', () => {
-    const orders = [{}];
-    const toppings = [{type: 'pepperoni', x: 30, y: 40}, {type: 'pepperoni', x: 40, y: 30}];
-    const burner = [{state: null}];
-    //run draw function
-    draw(orders, toppings, burner);
-    //draw pizza toppings on pizza
-    const toppingEls = document.getElementsByClassName('topping');
-    expect(toppingEls.length).toEqual(2);
-    expect(toppingEls[0].x).toBe(30);
-    expect(toppingEls[1].x).toBe(40);
-  });
-  test('updates the burner with a pizza', () => {
-    const orders = [{}];
-    const toppings = [{type: 'pepperoni', x: 30, y: 40}, {type: 'pepperoni', x: 40, y: 30}];
-    const burner = [{state: null}];
-    //run cook pizza function?
-
-    //run draw function
-    draw(orders, toppings, burner);
-    //redraw pizza with toppings on burner
-    const burnerEl = document.getElementById('burnerBox');
-    expect(burnerEl.firstChild).not.toBe(null);
-  });*/
 
 describe('init', () => {
   //test that 2 uls + li items, 2 divs, and a button were created

@@ -224,9 +224,10 @@ const completeOrder = (toppings, score) => {
 
 const drawScore = (score) => {
   let scoreCounter = document.querySelector('.score');
+  let burnerBox = document.querySelector('.burnerBox');
   scoreCounter.textContent = `Score: ${score.points}`;
+  burnerBox.innerHTML = '';
 };
-
 
 const init = () => {
   const orderList = document.createElement('ul');
@@ -245,6 +246,30 @@ const init = () => {
   burnerBox.className = 'burnerBox';
   containerBox.appendChild(burnerBox);
 
+  const buttonContainer = document.createElement('div');
+  buttonContainer.className = 'buttonContainer';
+  document.body.appendChild(buttonContainer);
+
+  const cookButton = document.createElement('button');
+  cookButton.className = 'button';
+  const cookText = document.createTextNode('Cook Pizza');
+  cookButton.addEventListener('click', event => {
+    drawBurnerToppings(toppings);
+    cookPizza(toppings);
+  });
+  cookButton.appendChild(cookText);
+  buttonContainer.appendChild(cookButton);
+
+  const completeButton = document.createElement('button');
+  completeButton.className = 'button';
+  const completeText = document.createTextNode('Complete Order');
+  completeButton.addEventListener('click', event => {
+    score = completeOrder(toppings, score);
+    drawScore(score);
+  });
+  completeButton.appendChild(completeText);
+  buttonContainer.appendChild(completeButton);
+
   const toppingList = document.createElement('ul');
   toppingList.className = 'toppingList';
   document.body.appendChild(toppingList);
@@ -255,14 +280,17 @@ const init = () => {
 
   const scoreCounter = document.createElement('li');
   scoreCounter.className = 'score';
-  scoreCounter.textContent = `Score: ${score.points}`;
+  scoreCounter.textContent = `Score: 0`;
   toppingList.appendChild(scoreCounter);
+<<<<<<< HEAD
 
   const completeButton = document.createElement('button');
   document.body.appendChild(completeButton);
 
   const addTopping = document.createElement('img');
   pizzaBox.appendChild(addTopping);
+=======
+>>>>>>> e207b3666965e6585703f0dddc6db12a716f9197
 };
 
 window.onload = init;

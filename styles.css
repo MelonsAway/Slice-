@@ -60,6 +60,20 @@
   display: inline-block;
 }
 
+.buttonContainer {
+  background: #4A4947;
+  height: 3rem;
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem 0;
+}
+
+.button {
+  width: 45%;
+  font-size: 2rem;
+}
+
+
 .pepperoni {
   height: 75px;
   background-image: url('images/pepperoni.svg');
