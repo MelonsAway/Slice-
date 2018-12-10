@@ -2,6 +2,8 @@ const {
   fetchRandom,
   addOrder,
   drawOrders,
+  addTopping,
+  drawTopping,
   cookPizza,
   drawBurnerToppings,
   completeOrder,
@@ -53,6 +55,52 @@ describe('draw orders', () => {
   });
 });
 
+describe('add topping', () => {
+  test('toppings.pizza array is updated with topping objects', () => {
+    let toppings = [{
+      pizza: [],
+      burner: []
+    }];
+    expect(toppings[0].pizza.length).toBe(0);
+    addTopping(toppings);
+    expect(toppings[0].pizza.length).toBe(1);
+  });
+  test('topping objects should have left and bottom values in between 100 and 320', () => {
+    let toppings = [{
+      pizza: [],
+      burner: []
+    }];
+    addTopping(toppings);
+    expect(toppings[0].pizza[0].x).toBeGreaterThanOrEqual(100);
+    expect(toppings[0].pizza[0].x).toBeLessThan(320);
+  });
+});
+
+describe('draw topping', () => {
+  test('toppings were drawn on the pizza accordingly', () => {
+    //pizzaBox
+    const pizzaBox = document.createElement('div');
+    pizzaBox.className = "pizzaBox";
+    document.body.appendChild(pizzaBox);
+    //toppings
+    let toppings = [{
+      pizza: [],
+      burner: []
+    }];
+    let topping = {
+      type: 'pepperoni',
+      x: 135,
+      y: 246,
+    };
+    expect(pizzaBox.firstChild).toBe(null);
+    drawTopping(topping, toppings);
+    expect(pizzaBox.childNodes.length).toBe(1);
+    expect(pizzaBox.childNodes[0].style.left).toBe('135px');
+    expect(pizzaBox.childNodes[0].style.bottom).toBe('246px');
+  });
+});
+
+
 describe('cook pizza', () => {
   test('pizza has all topping objects removed', () => {
     let toppings = [{
@@ -90,11 +138,13 @@ describe('draw burner toppings', () => {
     //sample pepperoni
     let pepperoni1 = document.createElement('img');
     pepperoni1.className = "pepperoni";
+    pepperoni1.setAttribute('src', 'images/pepperoni.svg');
     pepperoni1.setAttribute('style', `position: absolute; left: 89; bottom: 135`);
     pizzaBox.appendChild(pepperoni1);
     //sample pepperoni 2
     let pepperoni2 = document.createElement('img');
     pepperoni2.className = "pepperoni";
+    pepperoni2.setAttribute('src', 'images/pepperoni.svg');
     pepperoni2.setAttribute('style', `position: absolute; left: 198; bottom: 74`);
     pizzaBox.appendChild(pepperoni2);
     //toppings parameter
