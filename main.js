@@ -118,25 +118,11 @@ let ingredientLocation = [];
 //runs when window loads
 window.onLoad();
 */
-let pizza = [];
 let topping = {};
-const addTopping = (pizza, toppingName) => {
-  topping.type = toppingName;
-    if(topping.type='pepperoni') {
-      topping = {
-        type: 'pepperoni',
-        x: Math.random*30,
-        y: Math.random*40,
-      };
-    pizza.push(topping);
-    return topping;
-  };
-};
-
 let orders = [];
 let toppings = [{
-  pizza: {},
-  burner: {}
+  pizza: [],
+  burner: []
 }];
 let score = {points: 0};
 
@@ -151,6 +137,39 @@ const addOrder = (num, list) => {
   }];
 };
 
+/*const addTopping = (toppingName) => {
+  topping.type = toppingName;
+    if(topping.type='pepperoni') {
+      topping = {
+        type: 'pepperoni',
+        x: Math.random*30,
+        y: Math.random*40,
+      };
+    toppings[0].pizza.push(topping);
+    return topping;
+  };
+};
+*/
+const addTopping = (toppings) => {
+    let topping = {
+      type: 'pepperoni',
+      x: fetchRandom(100, 320),
+      y: fetchRandom(100, 320),
+    };
+  toppings.push(topping);
+  return topping;
+};
+
+const drawTopping = (toppings) => {
+  let imgEl = document.createElement('img');
+  imgEl.className = `${topping.type}`;
+  imgEl.setAttribute('src', 'images/pepperoni.svg');
+  imgEl.setAttribute('style', `position: absolute; left: ${topping.x}px; bottom: ${topping.y}px`);
+  document.body.appendChild(imgEl);
+//  pizzaBox.innerHTML = '';
+};
+
+
 const drawOrders = (list) => {
   const orderList = document.querySelector('.orderList');
   //orderList.innerHTML = '';
@@ -163,13 +182,15 @@ const drawOrders = (list) => {
   };
 };
 
-<<<<<<< HEAD
-const draw = (pizza) => {
-  pizzaBox.className = 'pizzaBox';
-}
+const cookPizza = (toppings) => {
+  if(toppings[0].pizza && toppings[0].burner.length == 0) {
+    toppings[0].burner = [...toppings[0].pizza];
+    toppings[0].pizza = [];
   };
   return toppings;
 };
+
+
 
 const drawBurnerToppings = (toppings) => {
   let pizza = toppings[0].pizza;
@@ -190,7 +211,7 @@ const drawBurnerToppings = (toppings) => {
     };
   };
 };
-*/
+
 
 
 const completeOrder = (toppings, score) => {
@@ -239,6 +260,9 @@ const init = () => {
 
   const completeButton = document.createElement('button');
   document.body.appendChild(completeButton);
+
+  const addTopping = document.createElement('img');
+  pizzaBox.appendChild(addTopping);
 };
 
 window.onload = init;
@@ -249,7 +273,8 @@ window.onload = init;
 
 if (typeof module !== 'undefined') {
   module.exports = {
-
+    drawTopping,
+    addTopping,
     fetchRandom,
     addOrder,
     drawOrders,

@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-=======
-const {fetchRandom, addOrder, drawOrders, cookPizza, drawBurnerToppings, completeOrder, drawScore, init} = require('./main');
+const {fetchRandom, addTopping, addOrder, drawOrders, cookPizza, drawTopping, drawBurnerToppings, completeOrder, drawScore, init} = require('./main');
 
 beforeEach(() => {
   // reset the document
@@ -14,11 +12,14 @@ describe('fetchRandom', () => {
     expect(random).toBeLessThan(20);
   });
 });
->>>>>>> 2b3c576a7cc25e23c63a911c2ec7255d9c5429ad
 
-const {addOrder, cookPizza, completeOrder, addTopping, draw, init} = require('./main');let pizza = [];
-let topping = {};
+
 describe('addTopping', () => {
+  let toppings = [
+    pizza = [],
+    burner = [],
+  ];
+  let topping = {};
 
 // add pepp to a pizza
   test('on addTopping add pepp to pizza', () => {
@@ -28,17 +29,13 @@ describe('addTopping', () => {
     //pizza should have a pepp
     expect(topping.type = 'pepperoni');
     expect(pizza[0] = topping);
+    expect(toppings[0] = pizza);
+    expect(toppings.pizza = 'pepperoni');
   })
   test('not pepperoni', () => {
     addTopping(pizza, 'stuff');
     expect(topping.type != 'pepperoni');
     expect(topping.type = 'stuff');
-  })
-})
-describe('draw', () => {
-  test('creates div', () => {
-    draw(pizza);
-    expect(pizzaBox.class = 'pizzaBox')
   })
 })
 describe('add order', () => {
@@ -71,7 +68,13 @@ describe('draw orders', () => {
     expect(liEls[1].textContent).toBe('13 pepperoni');
   });
 });
-
+describe('draw images', () => {
+  let imgEl = document.createElement('img');
+  test('should draw pepps on pizza', () => {
+    drawTopping('pepperoni');
+    expect(imgEl.src = 'images/pepperoni.svg');
+  })
+});
 describe('cook pizza', () => {
   test('pizza has all topping objects removed', () => {
     let toppings = [{
