@@ -156,7 +156,7 @@ const addTopping = (toppings) => {
       x: fetchRandom(100, 320),
       y: fetchRandom(100, 320),
     };
-  toppings.push(topping);
+  pizza.push(topping);
   return topping;
 };
 
